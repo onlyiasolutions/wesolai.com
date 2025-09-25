@@ -3,13 +3,26 @@
   "trailingSlash": false,
   "headers": [
     {
+      "source": "/(.*)\\.(css|js|png|jpg|jpeg|gif|svg|webp|avif|ico|woff|woff2|ttf)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, s-maxage=86400"
-        }
+        { "key": "Cache-Control", "value": "public, max-age=60, s-maxage=300" }
       ]
     }
+  ],
+  "redirects": [
+    { "source": "/waitlist.html", "destination": "/waitlist", "permanent": true },
+    { "source": "/privacy.html", "destination": "/privacy", "permanent": true },
+    { "source": "/terms.html", "destination": "/terms", "permanent": true },
+    { "source": "/cookies.html", "destination": "/cookies", "permanent": true },
+    { "source": "/contact.html", "destination": "/contact", "permanent": true },
+    { "source": "/niveles.html", "destination": "/niveles", "permanent": true },
+    { "source": "/form.html", "destination": "/form", "permanent": true }
   ]
 }
