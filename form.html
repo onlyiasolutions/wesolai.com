@@ -2057,10 +2057,10 @@ SolAI.">
       flex: none;
       place-content: flex-start;
       align-items: center;
-      gap: 28px;
+      gap: 24px;
       width: 100%;
       height: auto;
-      padding: 36px 24px 72px;
+      padding: 56px 24px 88px;
       display: flex;
       position: relative;
       overflow: hidden
@@ -2095,9 +2095,9 @@ SolAI.">
 
     .framer-EWKkU .framer-bmvok9 {
       will-change: var(--framer-will-change-override, transform);
-      background-color: rgba(4, 7, 13, 0.88);
+      background-color: rgba(15, 21, 32, 0.94);
       border-radius: 24px;
-      border: 1px solid rgba(216, 231, 242, 0.12);
+      border: 1px solid rgba(216, 231, 242, 0.14);
       flex-flow: column;
       flex: none;
       place-content: center;
@@ -2109,7 +2109,7 @@ SolAI.">
       display: flex;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 24px 64px -40px rgba(9, 31, 64, 0.65), inset 0 2px 1px rgba(207, 231, 255, 0.2)
+      box-shadow: 0 24px 72px -42px rgba(9, 31, 64, 0.7), inset 0 2px 1px rgba(207, 231, 255, 0.18)
     }
 
     .framer-EWKkU .framer-7el4zz {
@@ -2142,6 +2142,28 @@ SolAI.">
       margin: 0 auto;
       display: flex;
       position: relative
+    }
+
+    body:not([data-stepper-ready]) .framer-12zesfi {
+      opacity: 0;
+      pointer-events: none
+    }
+
+    body[data-stepper-ready] .framer-12zesfi {
+      opacity: 1;
+      pointer-events: auto;
+      transition: opacity .25s ease
+    }
+
+    .framer-EWKkU .form-step {
+      display: none !important;
+      flex-direction: column;
+      gap: 18px;
+      width: 100%
+    }
+
+    .framer-EWKkU .form-step.form-step-active {
+      display: flex !important
     }
 
     .framer-EWKkU .form-stepper-progress {
@@ -2206,7 +2228,7 @@ SolAI.">
 
     .framer-EWKkU .form-stepper-button:hover {
       transform: translateY(-1px);
-      background-color: rgb(70, 70, 70)
+      background-color: #3d4250
     }
 
     .framer-EWKkU .form-stepper-button:focus-visible {
@@ -2222,6 +2244,15 @@ SolAI.">
 
     .framer-EWKkU .form-stepper-button-secondary:hover {
       background-color: rgba(213, 219, 230, 0.08)
+    }
+
+    .framer-EWKkU .form-stepper-button[data-step-submit] {
+      background-color: #4a75ff;
+      box-shadow: 0 12px 30px -18px rgba(74, 117, 255, 0.8)
+    }
+
+    .framer-EWKkU .form-stepper-button[data-step-submit]:hover {
+      background-color: #5b85ff
     }
 
     .framer-EWKkU .form-stepper-button[disabled] {
@@ -3421,8 +3452,8 @@ SolAI.">
             <div class="framer-7el4zz">
               <form class="framer-12zesfi" data-framer-appear-id="12zesfi" style="opacity:0.001;transform:none">
                 <div class="form-stepper-progress" aria-live="polite">
-                  <span class="form-stepper-progress-label">Progreso</span>
-                  <span data-step-indicator>Paso 1 de 6</span>
+                  <span class="form-stepper-progress-label">PROGRESO</span>
+                  <span data-step-indicator>PASO 1 DE 6</span>
                 </div>
                 <div class="form-step form-step-active" data-form-step aria-hidden="false">
                   <label class="framer-uh6uw2">
@@ -3569,328 +3600,87 @@ SolAI.">
                   <div class="form-stepper-nav form-stepper-nav-final">
                     <button type="button" class="form-stepper-button form-stepper-button-secondary"
                       data-step-prev>Anterior</button>
-                    <div class="ssr-variant hidden-1rhgb77 hidden-1jivxlf">
-                      <div class="framer-1muy388-container"><button type="submit"
-                          class="framer-hKnyw framer-kwamgw framer-v-kwamgw" data-framer-name="Default"
-                          data-reset="button"
-                          style="background-color:rgb(51, 51, 51);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;height:100%;width:100%;opacity:1"
-                          tabindex="0">
-                          <div class="framer-fnbuf0"
-                            style="--extracted-r6o4lv:rgb(255, 255, 255);--framer-link-text-color:rgb(0, 153, 255);--framer-link-text-decoration:underline;transform:none"
-                            data-framer-component-type="RichTextContainer">
-                            <p
-                              style="--font-selector:SW50ZXItU2VtaUJvbGQ=;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:14px;--framer-font-weight:600;--framer-text-color:var(--extracted-r6o4lv, rgb(255, 255, 255))"
-                              class="framer-text">Enviar</p>
-                          </div>
-                        </button></div>
-                    </div>
-                    <div class="ssr-variant hidden-1gm56si hidden-1jivxlf">
-                      <div class="framer-1muy388-container"><button type="submit"
-                          class="framer-hKnyw framer-kwamgw framer-v-kwamgw" data-framer-name="Default"
-                          data-reset="button"
-                          style="background-color:rgb(51, 51, 51);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;height:100%;width:100%;opacity:1"
-                          tabindex="0">
-                          <div class="framer-fnbuf0"
-                            style="--extracted-r6o4lv:rgb(255, 255, 255);--framer-link-text-color:rgb(0, 153, 255);--framer-link-text-decoration:underline;transform:none"
-                            data-framer-component-type="RichTextContainer">
-                            <p
-                              style="--font-selector:SW50ZXItU2VtaUJvbGQ=;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:14px;--framer-font-weight:600;--framer-text-color:var(--extracted-r6o4lv, rgb(255, 255, 255))"
-                              class="framer-text">Enviar</p>
-                          </div>
-                        </button></div>
-                    </div>
-                    <div class="ssr-variant hidden-1gm56si hidden-1rhgb77">
-                      <div class="framer-1muy388-container"><button type="submit"
-                          class="framer-hKnyw framer-kwamgw framer-v-kwamgw" data-framer-name="Default"
-                          data-reset="button"
-                          style="background-color:rgb(51, 51, 51);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;height:100%;width:100%;opacity:1"
-                          tabindex="0">
-                          <div class="framer-fnbuf0"
-                            style="--extracted-r6o4lv:rgb(255, 255, 255);--framer-link-text-color:rgb(0, 153, 255);--framer-link-text-decoration:underline;transform:none"
-                            data-framer-component-type="RichTextContainer">
-                            <p
-                              style="--font-selector:SW50ZXItU2VtaUJvbGQ=;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:14px;--framer-font-weight:600;--framer-text-color:var(--extracted-r6o4lv, rgb(255, 255, 255))"
-                              class="framer-text">Enviar</p>
-                          </div>
-                        </button></div>
-                    </div>
+                    <button type="submit" class="form-stepper-button" data-step-submit>Enviar</button>
                   </div>
                 </div>
               </form>
               <script>
                 (() => {
-                  const addStyles = () => {
-                    if (document.getElementById("form-stepper-style")) return;
-                    const style = document.createElement("style");
-                    style.id = "form-stepper-style";
-                    style.textContent = `
-body:not([data-stepper-ready]) .framer-12zesfi { opacity: 0; pointer-events: none; }
-body[data-stepper-ready] .framer-12zesfi { opacity: 1; pointer-events: auto; transition: opacity 0.25s ease; }
-.framer-12zesfi .form-step { display: none !important; flex-direction: column; gap: 18px; width: 100%; }
-.framer-12zesfi .form-step.form-step-active { display: flex !important; }
-.framer-12zesfi .form-stepper-progress { width: 100%; display: flex; justify-content: space-between; align-items: baseline; padding: 8px 2px 20px; font-family: "Inter", sans-serif; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(213,219,230,0.9); border-bottom: 1px solid rgba(213,219,230,0.18); }
-.framer-12zesfi .form-stepper-progress-label { font-weight: 500; opacity: 0.75; }
-.framer-12zesfi .form-stepper-progress [data-step-indicator] { font-weight: 600; opacity: 0.95; }
-.framer-12zesfi .form-stepper-nav { width: 100%; display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
-.framer-12zesfi .form-stepper-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; border-radius: 12px; border: none; cursor: pointer; background-color: #30343f; color: #fff; font-family: "Inter", sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; transition: background-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease; }
-.framer-12zesfi .form-stepper-button:hover { background-color: #3d4250; transform: translateY(-1px); }
-.framer-12zesfi .form-stepper-button:focus-visible { outline: 2px solid rgba(213,219,230,0.65); outline-offset: 2px; }
-.framer-12zesfi .form-stepper-button-secondary { background: transparent; color: rgba(213,219,230,0.85); border: 1px solid rgba(213,219,230,0.35); }
-.framer-12zesfi .form-stepper-button-secondary:hover { background-color: rgba(213,219,230,0.08); }
-.framer-12zesfi .form-stepper-nav-final { margin-top: 16px; }
-                    `;
-                    document.head.appendChild(style);
+                  const form = document.querySelector(".framer-12zesfi");
+                  if (!form) return;
+
+                  const steps = Array.from(form.querySelectorAll(".form-step"));
+                  if (!steps.length) return;
+
+                  const indicator = form.querySelector("[data-step-indicator]");
+                  const totalSteps = steps.length;
+                  let current = steps.findIndex(step => step.classList.contains("form-step-active"));
+                  if (current < 0) current = 0;
+
+                  const update = () => {
+                    steps.forEach((step, index) => {
+                      const active = index === current;
+                      step.classList.toggle("form-step-active", active);
+                      step.setAttribute("aria-hidden", active ? "false" : "true");
+                    });
+                    if (indicator) indicator.textContent = `PASO ${current + 1} DE ${totalSteps}`;
+                    document.body && document.body.setAttribute("data-stepper-ready", "true");
                   };
 
-                  const STEP_BLUEPRINT = [
-                    ["Nombre", "Apellidos", "Email", "Teléfono"],
-                    ["Web Empresa"],
-                    ["Nivel de tu Empresa"],
-                    ["Sector"],
-                    ["Facturación Mensual Aprox."],
-                    ["¿Algo más que quieras comentarnos?"]
-                  ];
+                  const fieldsOf = step => Array.from(step.querySelectorAll("input, select, textarea"));
 
-                  const normalize = value => value.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
-                  const ensureStructure = form => {
-                    if (form.dataset.stepperStructure === "true") {
-                      if (form.querySelector("[data-form-step]")) return true;
-                      form.removeAttribute("data-stepper-structure");
-                      form.removeAttribute("data-stepper-ready");
-                    }
-
-                    if (form.querySelector("[data-form-step]")) {
-                      form.dataset.stepperStructure = "true";
-                      return true;
-                    }
-
-                    const labels = Array.from(form.querySelectorAll(":scope > label"));
-                    if (!labels.length) return false;
-
-                    const submitVariants = Array.from(form.querySelectorAll(":scope > .ssr-variant, :scope > .framer-1muy388-container"));
-                    submitVariants.forEach(node => node.remove());
-
-                    let progress = form.querySelector(":scope > .form-stepper-progress");
-                    if (!progress) {
-                      progress = document.createElement("div");
-                      progress.className = "form-stepper-progress";
-                      progress.setAttribute("aria-live", "polite");
-                      const labelSpan = document.createElement("span");
-                      labelSpan.className = "form-stepper-progress-label";
-                      labelSpan.textContent = "Progreso";
-                      const indicatorSpan = document.createElement("span");
-                      indicatorSpan.setAttribute("data-step-indicator", "");
-                      progress.append(labelSpan, indicatorSpan);
-                      form.prepend(progress);
-                    } else if (!progress.querySelector("[data-step-indicator]")) {
-                      const indicatorSpan = document.createElement("span");
-                      indicatorSpan.setAttribute("data-step-indicator", "");
-                      progress.appendChild(indicatorSpan);
-                    }
-
-                    const used = new Set();
-                    const findLabel = keyword => {
-                      const normalizedKeyword = normalize(keyword);
-                      for (const label of labels) {
-                        if (used.has(label)) continue;
-                        const text = normalize(label.textContent || "");
-                        if (text.includes(normalizedKeyword)) {
-                          used.add(label);
-                          return label;
-                        }
+                  const validateStep = () => {
+                    const activeStep = steps[current];
+                    for (const field of fieldsOf(activeStep)) {
+                      if (!field.checkValidity()) {
+                        field.reportValidity();
+                        if (typeof field.focus === "function") field.focus();
+                        return false;
                       }
-                      return null;
-                    };
-
-                    const createdSteps = [];
-                    STEP_BLUEPRINT.forEach(keywords => {
-                      const step = document.createElement("div");
-                      step.className = "form-step";
-                      step.setAttribute("data-form-step", "");
-                      step.setAttribute("aria-hidden", "true");
-                      keywords.forEach(keyword => {
-                        const label = findLabel(keyword);
-                        if (label) step.appendChild(label);
-                      });
-                      form.appendChild(step);
-                      createdSteps.push(step);
-                    });
-
-                    const leftoverLabels = labels.filter(label => !used.has(label));
-                    if (leftoverLabels.length) {
-                      const fallbackStep = createdSteps[createdSteps.length - 1] ?? createdSteps[0];
-                      leftoverLabels.forEach(label => fallbackStep.appendChild(label));
                     }
-
-                    createdSteps.forEach((step, index) => {
-                      let nav = step.querySelector(".form-stepper-nav");
-                      if (!nav) {
-                        nav = document.createElement("div");
-                        nav.className = "form-stepper-nav";
-                        step.appendChild(nav);
-                      } else {
-                        nav.innerHTML = "";
-                      }
-                      if (index > 0) {
-                        const prevButton = document.createElement("button");
-                        prevButton.type = "button";
-                        prevButton.className = "form-stepper-button form-stepper-button-secondary";
-                        prevButton.setAttribute("data-step-prev", "");
-                        prevButton.textContent = "Anterior";
-                        nav.appendChild(prevButton);
-                      }
-                      if (index < createdSteps.length - 1) {
-                        const nextButton = document.createElement("button");
-                        nextButton.type = "button";
-                        nextButton.className = "form-stepper-button";
-                        nextButton.setAttribute("data-step-next", "");
-                        nextButton.textContent = "Siguiente";
-                        nav.appendChild(nextButton);
-                      } else {
-                        nav.classList.add("form-stepper-nav-final");
-                        submitVariants.forEach(node => nav.appendChild(node));
-                      }
-                    });
-
-                    form.dataset.stepperStructure = "true";
                     return true;
                   };
 
-                  const setupStepper = form => {
-                    if (!form.classList.contains("form-stepper-pending")) {
-                      form.classList.add("form-stepper-pending");
-                    }
-
-                    if (!ensureStructure(form)) return;
-
-                    const steps = Array.from(form.querySelectorAll("[data-form-step]"));
-                    if (!steps.length) return;
-
-                    const indicator = form.querySelector("[data-step-indicator]");
-                    const totalSteps = steps.length;
-                    let currentIndex = 0;
-
-                    const focusableSelector = "input, select, textarea, button, [tabindex]";
-                    const toggleStep = targetIndex => {
-                      currentIndex = Math.max(0, Math.min(targetIndex, totalSteps - 1));
-                      steps.forEach((step, index) => {
-                        const isActive = index === currentIndex;
-                        step.classList.toggle("form-step-active", isActive);
-                        step.setAttribute("aria-hidden", isActive ? "false" : "true");
-                        const focusables = step.querySelectorAll(focusableSelector);
-                        focusables.forEach(element => {
-                          if (!(element instanceof HTMLElement)) return;
-                          if (isActive) {
-                            const stored = element.getAttribute("data-original-tabindex");
-                            if (stored !== null) {
-                              if (stored === "") element.removeAttribute("tabindex");
-                              else element.setAttribute("tabindex", stored);
-                              element.removeAttribute("data-original-tabindex");
-                            } else {
-                              element.removeAttribute("tabindex");
-                            }
-                          } else {
-                            if (!element.hasAttribute("data-original-tabindex")) {
-                              const existing = element.getAttribute("tabindex");
-                              if (existing !== null) element.setAttribute("data-original-tabindex", existing);
-                              else element.setAttribute("data-original-tabindex", "");
-                            }
-                            element.setAttribute("tabindex", "-1");
-                          }
-                        });
-                      });
-                      if (indicator) indicator.textContent = `Paso ${currentIndex + 1} de ${totalSteps}`;
-                    };
-
-                    const validateCurrentStep = () => {
-                      const currentStep = steps[currentIndex];
-                      const fields = Array.from(currentStep.querySelectorAll("input, select, textarea"));
-                      for (const field of fields) {
-                        if (!field.checkValidity()) {
-                          field.reportValidity();
-                          if (typeof field.focus === "function") field.focus();
-                          return false;
-                        }
-                      }
-                      return true;
-                    };
-
-                    if (!form.dataset.stepperHandlers) {
-                      form.addEventListener("click", event => {
-                        const target = event.target instanceof HTMLElement ? event.target : null;
-                        if (!target) return;
-                        const nextButton = target.closest("[data-step-next]");
-                        if (nextButton) {
-                          event.preventDefault();
-                          if (!validateCurrentStep()) return;
-                          if (currentIndex < totalSteps - 1) toggleStep(currentIndex + 1);
-                          return;
-                        }
-                        const prevButton = target.closest("[data-step-prev]");
-                        if (prevButton) {
-                          event.preventDefault();
-                          if (currentIndex > 0) toggleStep(currentIndex - 1);
-                        }
-                      });
-
-                      form.addEventListener("keydown", event => {
-                        if (event.key !== "Enter") return;
-                        if (currentIndex >= totalSteps - 1) return;
-                        const activeStep = steps[currentIndex];
-                        if (!activeStep.contains(event.target)) return;
-                        event.preventDefault();
-                        if (validateCurrentStep()) toggleStep(currentIndex + 1);
-                      });
-
-                      form.dataset.stepperHandlers = "true";
-                    }
-
-                    toggleStep(0);
-                    form.dataset.stepperReady = "true";
-                    form.classList.remove("form-stepper-pending");
-                    form.classList.add("form-stepper-ready");
-                    if (document.body) document.body.setAttribute("data-stepper-ready", "true");
-                  };
-
-                  const initialize = () => {
-                    const forms = document.querySelectorAll(".framer-12zesfi");
-                    if (!forms.length) return;
-                    forms.forEach(setupStepper);
-                  };
-
-                  let refreshInterval = null;
-                  const scheduleInitialize = () => {
-                    addStyles();
-                    document.body && document.body.removeAttribute("data-stepper-ready");
-                    initialize();
-                    if (refreshInterval !== null) return;
-                    let attempts = 0;
-                    const maxAttempts = 40;
-                    refreshInterval = setInterval(() => {
-                      initialize();
-                      attempts += 1;
-                      if (attempts >= maxAttempts) {
-                        clearInterval(refreshInterval);
-                        refreshInterval = null;
-                      }
-                    }, 250);
-                  };
-
-                  if (document.readyState === "loading") {
-                    document.addEventListener("DOMContentLoaded", scheduleInitialize);
-                  } else {
-                    scheduleInitialize();
+                  if (form.dataset.stepperBound === "true") {
+                    document.body && document.body.setAttribute("data-stepper-ready", "true");
+                    return;
                   }
 
-                  window.addEventListener("pageshow", scheduleInitialize);
-
-                  new MutationObserver(scheduleInitialize).observe(document.documentElement, {
-                    childList: true,
-                    subtree: true
+                  form.addEventListener("click", event => {
+                    const next = event.target.closest("[data-step-next]");
+                    const prev = event.target.closest("[data-step-prev]");
+                    if (next) {
+                      event.preventDefault();
+                      if (!validateStep()) return;
+                      if (current < totalSteps - 1) {
+                        current += 1;
+                        update();
+                      }
+                      return;
+                    }
+                    if (prev) {
+                      event.preventDefault();
+                      if (current > 0) {
+                        current -= 1;
+                        update();
+                      }
+                    }
                   });
 
-                  window.__solaiStepperInit = scheduleInitialize;
+                  form.addEventListener("keydown", event => {
+                    if (event.key !== "Enter") return;
+                    if (current >= totalSteps - 1) return;
+                    const activeStep = steps[current];
+                    if (!activeStep.contains(event.target)) return;
+                    event.preventDefault();
+                    if (!validateStep()) return;
+                    current += 1;
+                    update();
+                  });
+
+                  form.dataset.stepperBound = "true";
+                  document.body && document.body.removeAttribute("data-stepper-ready");
+                  update();
                 })();
               </script>
             </div>
