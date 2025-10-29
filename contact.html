@@ -4498,32 +4498,26 @@
       const attributeReplacements = [
         {
           attribute: "href",
-          match: value => value.toLowerCase().includes("mailto:hola@onlyiasolutions.com"),
-          replacement: "mailto:hola@wesolai.com"
+          match: value => value.toLowerCase().includes("onlyiasolutions.com"),
+          replacement: attrValue => attrValue.toLowerCase().includes("instagram.com")
+            ? "https://www.instagram.com/wesolailabs"
+            : "mailto:hola@wesolai.com"
         },
         {
-          attribute: "href",
-          match: value => value.toLowerCase().includes("mailto:landio@support.com"),
-          replacement: "mailto:hola@wesolai.com"
-        },
-        {
-          attribute: "href",
-          match: value => value.toLowerCase().includes("instagram.com/onlyiasolutions"),
-          replacement: "https://www.instagram.com/wesolailabs"
+          attribute: "data-framer-link",
+          match: value => value.toLowerCase().includes("onlyiasolutions.com"),
+          replacement: attrValue => attrValue.toLowerCase().includes("instagram.com")
+            ? "https://www.instagram.com/wesolailabs"
+            : "mailto:hola@wesolai.com"
         }
       ];
       const textReplacements = [
         {
-          match: value => value.toLowerCase().includes("hola@onlyiasolutions.com"),
-          replacer: value => value.replace(/hola@onlyiasolutions\.com/gi, "hola@wesolai.com")
-        },
-        {
-          match: value => value.toLowerCase().includes("landio@support.com"),
-          replacer: value => value.replace(/landio@support\.com/gi, "hola@wesolai.com")
-        },
-        {
-          match: value => value.toLowerCase().includes("instagram.com/onlyiasolutions"),
-          replacer: value => value.replace(/instagram\.com\/onlyiasolutions\/?/gi, "instagram.com/wesolailabs")
+          match: value => value.toLowerCase().includes("onlyiasolutions.com"),
+          replacer: value => value
+            .replace(/hola@onlyiasolutions\.com/gi, "hola@wesolai.com")
+            .replace(/landio@support\.com/gi, "hola@wesolai.com")
+            .replace(/instagram\.com\/onlyiasolutions\/?/gi, "instagram.com/wesolailabs")
         }
       ];
       const replaceTextNodes = () => {
@@ -4553,12 +4547,20 @@
           elements.forEach(element => {
             const current = element.getAttribute(attribute);
             if (!current) return;
-            if (match(current) && current !== replacement) {
-              element.setAttribute(attribute, replacement);
+            if (match(current)) {
+              const newValue = typeof replacement === "function" ? replacement(current) : replacement;
+              if (current !== newValue) {
+                element.setAttribute(attribute, newValue);
+              }
               mutated = true;
             }
-            if (attribute === "href" && element instanceof HTMLAnchorElement && match(element.href) && element.href !== replacement) {
-              element.href = replacement;
+            if (attribute === "href" && element instanceof HTMLAnchorElement) {
+              const resolved = element.href;
+              if (resolved && match(resolved)) {
+                const newValue = typeof replacement === "function" ? replacement(resolved) : replacement;
+                if (resolved !== newValue) element.href = newValue;
+                mutated = true;
+              }
             }
           });
         }
@@ -4572,7 +4574,7 @@
       const init = () => {
         applyReplacements();
         let runs = 0;
-        const maxRuns = 20;
+        const maxRuns = 40;
         const interval = setInterval(() => {
           applyReplacements();
           runs += 1;
