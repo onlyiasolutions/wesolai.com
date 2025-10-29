@@ -3987,83 +3987,104 @@ SolAI.">
       style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <!-- End of bodyEnd -->
-   <script>
-(() => {
-  const forms = document.querySelectorAll(".framer-12zesfi");
-  if (!forms.length) return;
+  <script>
+(function(){
+  // STEPper minimal sin cambiar estilos/HTML (6 pasos)
+  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
+  ready(init); window.addEventListener('load', init); // por si Framer rehidrata
 
-  const getFields = step => Array.from(step.querySelectorAll("input, select, textarea"));
+  function init(){
+    const form = document.querySelector('form');
+    if(!form) return;
 
-  forms.forEach(form => {
-    const steps = Array.from(form.querySelectorAll(".form-step"));
-    if (!steps.length) return;
+    // Normaliza texto de labels para encontrarlas
+    const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim();
+    const WRAP_SEL = '[data-framer-component-type], .framer-lib-form-plain-text-input, .framer-lib-form-select, .framer-hKnyw, .framer-iVOgv, .framer-ojcNP, .framer-UoxRz, .framer-nkkEe';
+    function wrapperFor(el){ let n=el; while(n && n.parentElement && n.parentElement!==form){ const p=n.parentElement; if(p.matches(WRAP_SEL)) return p; n=p; } return n||el; }
+    function byLabel(txt){
+      const t = norm(txt);
+      const lbl = Array.from(form.querySelectorAll('label')).find(l => norm(l.textContent).startsWith(t));
+      return lbl ? wrapperFor(lbl) : null;
+    }
 
-    let current = 0;
-    const indicator = form.querySelector("[data-step-indicator]");
+    // === EXACTAMENTE 6 PASOS ===
+    const step1 = ['Nombre','Apellidos','Email','Teléfono'];
+    const step2 = ['Web Empresa'];
+    const step3 = ['Nivel de tu Empresa'];
+    const step4 = ['Sector'];
+    const step5 = ['Facturación Mensual Aprox'];
+    const step6 = ['¿Algo más que quieras comentarnos?']; // + consentimientos + enviar
 
-    const setActive = () => {
-      steps.forEach((step, index) => {
-        const active = index === current;
-        step.classList.toggle("form-step-active", active);
-        step.setAttribute("aria-hidden", active ? "false" : "true");
-      });
-      if (indicator) indicator.textContent = `PASO ${current + 1} DE ${steps.length}`;
-      form.setAttribute("data-stepper-current", String(current));
-      if (document.body) document.body.setAttribute("data-stepper-ready", "true");
-      form.style.opacity = "1";
-      form.style.transform = "none";
-      form.style.pointerEvents = "auto";
-    };
+    const defs = [step1, step2, step3, step4, step5, step6];
+    const groups = defs.map(arr => arr.map(byLabel).filter(Boolean));
 
-    const validate = () => {
-      const fields = getFields(steps[current]);
-      for (const field of fields) {
-        if (!field.checkValidity()) {
-          field.reportValidity();
-          if (typeof field.focus === "function") field.focus();
+    // Añade submit & checks al paso 6
+    const submit = form.querySelector('button[type="submit"], input[type="submit"]');
+    if(submit){ const w = wrapperFor(submit); if(w && !groups[5].includes(w)) groups[5].push(w); }
+    Array.from(form.querySelectorAll('input[type="checkbox"], input[type="radio"]')).forEach(el=>{
+      const w = wrapperFor(el);
+      if(w && !groups.some(g=>g.includes(w))) groups[5].push(w);
+    });
+
+    // Si no hay mapeo, no tocar nada
+    if(groups.every(g=>g.length===0)) return;
+
+    // Nav (re-usa la clase visual del botón existente)
+    let nav = form.querySelector('#solai-stepper-nav');
+    if(!nav){
+      nav = document.createElement('div');
+      nav.id = 'solai-stepper-nav';
+      nav.style.display='flex'; nav.style.gap='12px'; nav.style.justifyContent='flex-end'; nav.style.marginTop='12px';
+      const prev = document.createElement('button'); prev.type='button'; prev.textContent='Atrás'; prev.setAttribute('data-step-prev','');
+      const next = document.createElement('button'); next.type='button'; next.textContent='Siguiente'; next.setAttribute('data-step-next','');
+      const ref = submit || form.querySelector('button');
+      if(ref){ prev.className = ref.className; next.className = ref.className; }
+      nav.append(prev,next); form.appendChild(nav);
+    }
+    const prevBtn = nav.querySelector('[data-step-prev]');
+    const nextBtn = nav.querySelector('[data-step-next]');
+
+    // Helpers
+    const hide = el => { if(el) el.style.display='none'; };
+    const show = el => { if(el) el.style.display=''; };
+
+    let step = 0; // 0..5
+    function render(i){
+      step = Math.max(0, Math.min(5, i));
+      groups.flat().forEach(hide);
+      groups[step].forEach(show);
+      prevBtn.style.visibility = step===0 ? 'hidden' : 'visible';
+      if(submit){ submit.style.display = step===5 ? '' : 'none'; }
+      nextBtn.style.display = step===5 ? 'none' : '';
+      try{ form.scrollIntoView({behavior:'smooth', block:'start'});}catch(e){}
+    }
+
+    function validate(){
+      const fields = groups[step].map(w => Array.from(w.querySelectorAll('input,select,textarea'))).flat();
+      for(const f of fields){
+        if(!f.checkValidity()){
+          f.reportValidity(); try{ f.focus(); }catch(e){}
           return false;
         }
       }
       return true;
-    };
+    }
 
-    form.querySelectorAll("[data-step-next]").forEach(button => {
-      button.addEventListener("click", event => {
-        event.preventDefault();
-        if (!validate()) return;
-        if (current < steps.length - 1) {
-          current += 1;
-          setActive();
-        }
-      });
+    prevBtn.onclick = () => render(step-1);
+    nextBtn.onclick = () => { if(validate()) render(step+1); };
+    form.addEventListener('keydown', e=>{
+      if(e.key==='Enter' && nextBtn.style.display!=='none' && groups[step].some(w=>w.contains(e.target))){
+        e.preventDefault(); if(validate()) render(step+1);
+      }
     });
 
-    form.querySelectorAll("[data-step-prev]").forEach(button => {
-      button.addEventListener("click", event => {
-        event.preventDefault();
-        if (current > 0) {
-          current -= 1;
-          setActive();
-        }
-      });
-    });
-
-    form.addEventListener("keydown", event => {
-      if (event.key !== "Enter") return;
-      if (current >= steps.length - 1) return;
-      if (!steps[current].contains(event.target)) return;
-      event.preventDefault();
-      if (!validate()) return;
-      current += 1;
-      setActive();
-    });
-
-    setActive();
-    window.addEventListener("load", setActive);
-    requestAnimationFrame(setActive);
-  });
+    // Primer pintado + tras rehidratación de Framer
+    render(0);
+    const mo = new MutationObserver(()=> setTimeout(()=>render(step),0));
+    mo.observe(form, {childList:true, subtree:true});
+  }
 })();
-</script>¡
+</script>
 </body>
 
 </html>
