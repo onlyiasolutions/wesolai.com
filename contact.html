@@ -4503,6 +4503,11 @@
         },
         {
           attribute: "href",
+          match: value => value.toLowerCase().includes("mailto:landio@support.com"),
+          replacement: "mailto:hola@wesolai.com"
+        },
+        {
+          attribute: "href",
           match: value => value.toLowerCase().includes("instagram.com/onlyiasolutions"),
           replacement: "https://www.instagram.com/wesolailabs"
         }
@@ -4511,6 +4516,10 @@
         {
           match: value => value.toLowerCase().includes("hola@onlyiasolutions.com"),
           replacer: value => value.replace(/hola@onlyiasolutions\.com/gi, "hola@wesolai.com")
+        },
+        {
+          match: value => value.toLowerCase().includes("landio@support.com"),
+          replacer: value => value.replace(/landio@support\.com/gi, "hola@wesolai.com")
         },
         {
           match: value => value.toLowerCase().includes("instagram.com/onlyiasolutions"),
