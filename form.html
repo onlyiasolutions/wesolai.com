@@ -8,6 +8,25 @@
 
   <script>try { if (localStorage.get("__framer_force_showing_editorbar_since")) { const n = document.createElement("link"); n.rel = "modulepreload"; n.href = "https://framer.com/edit/init.mjs"; document.head.appendChild(n) } } catch (e) { }</script>
   <!-- Start of headStart -->
+  <style>
+    .framer-12zesfi .form-stepper-progress { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 6px 4px 18px; font-family: "Inter", sans-serif; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(213,219,230,0.7); border-bottom: 1px solid rgba(213,219,230,0.12); }
+    .framer-12zesfi .form-stepper-progress-label { font-weight: 500; }
+    .framer-12zesfi .form-step { display: none; flex-direction: column; gap: 18px; width: 100%; }
+    .framer-12zesfi .form-step.form-step-active { display: flex; }
+    .framer-12zesfi .form-stepper-nav { width: 100%; display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+    .framer-12zesfi .form-stepper-nav-final { justify-content: space-between; align-items: center; gap: 16px; }
+    .framer-12zesfi .form-stepper-nav-final .form-stepper-submit { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; flex: 1; }
+    .framer-12zesfi .form-stepper-button { display: inline-flex; align-items: center; justify-content: center; padding: 14px 26px; border-radius: 10px; border: none; cursor: pointer; background-color: rgb(51, 51, 51); color: #fff; font-family: "Inter", sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease; }
+    .framer-12zesfi .form-stepper-button:hover { transform: translateY(-1px); background-color: rgb(70, 70, 70); }
+    .framer-12zesfi .form-stepper-button:focus-visible { outline: 2px solid rgba(213,219,230,0.6); outline-offset: 2px; }
+    .framer-12zesfi .form-stepper-button-secondary { background-color: transparent; color: rgba(213,219,230,0.85); border: 1px solid rgba(213,219,230,0.35); }
+    .framer-12zesfi .form-stepper-button-secondary:hover { background-color: rgba(213,219,230,0.08); }
+    @media (max-width: 809px) {
+      .framer-12zesfi .form-stepper-nav { justify-content: center; }
+      .framer-12zesfi .form-stepper-nav-final { flex-direction: column; align-items: stretch; gap: 12px; }
+      .framer-12zesfi .form-stepper-nav-final .form-stepper-submit { width: 100%; justify-content: center; }
+    }
+  </style>
 
   <!-- End of headStart -->
   <meta name="viewport" content="width=device-width">
@@ -792,7 +811,7 @@ SolAI.">
   </style>
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <meta name="robots" content="max-image-preview:large">
-  <link rel="canonical" href="form.html">
+  <link rel="canonical" href="/form">
   <meta property="og:url" content="https://wesolai.com/form">
   <style data-framer-breakpoint-css>
     @media(min-width: 1200px) {
@@ -3343,7 +3362,15 @@ SolAI.">
           </div>
           <div class="framer-bmvok9" data-framer-name="Hero">
             <div class="framer-7el4zz">
-              <form class="framer-12zesfi" data-framer-appear-id="12zesfi" style="opacity:0.001;transform:none"><label
+              <form class="framer-12zesfi" data-framer-appear-id="12zesfi" style="opacity:0.001;transform:none">
+                <div class="form-stepper-progress" aria-live="polite">
+                  <span class="form-stepper-progress-label">PROGRESO</span>
+                  <span data-step-indicator>PASO 1 DE 6</span>
+                </div>
+                <noscript>
+                  <p style="margin:12px 0 0;font-family:Inter, sans-serif;font-size:14px;color:rgb(213, 219, 230);">Activa JavaScript para completar todos los pasos del formulario.</p>
+                </noscript>
+                <div class="form-step form-step-active" data-form-step><label
                   class="framer-uh6uw2">
                   <div class="framer-1tja64s" style="transform:none" data-framer-component-type="RichTextContainer">
                     <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
@@ -3376,34 +3403,51 @@ SolAI.">
                   <div class="framer-form-text-input framer-form-input-wrapper framer-1j7g5cq"><input type="tel"
                       required name="Teléfono" placeholder="+34" class="framer-form-input framer-form-input-empty">
                   </div>
-                </label><label class="framer-19hlyao">
+                </label>
+                  <div class="form-stepper-nav">
+                    <button type="button" class="form-stepper-button" data-step-next>Siguiente</button>
+                  </div>
+                </div>
+                <div class="form-step" data-form-step><label class="framer-19hlyao">
                   <div class="framer-u4xhyx" style="transform:none" data-framer-component-type="RichTextContainer">
                     <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
                       class="framer-text">Web Empresa</p>
                   </div>
                   <div class="framer-form-text-input framer-form-input-wrapper framer-ksb58u"><input type="text"
                       name="Web" placeholder="www.ejemplo.com" class="framer-form-input framer-form-input-empty"></div>
-                </label><label class="framer-19eli5j">
+                </label>
+                  <div class="form-stepper-nav">
+                    <button type="button" class="form-stepper-button form-stepper-button-secondary" data-step-prev>Anterior</button>
+                    <button type="button" class="form-stepper-button" data-step-next>Siguiente</button>
+                  </div>
+                </div>
+                <div class="form-step" data-form-step><label class="framer-19eli5j">
                   <div class="framer-1yvo5ym" style="transform:none" data-framer-component-type="RichTextContainer">
                     <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
                       class="framer-text">Nivel de tu Empresa</p>
                   </div>
                   <div class="framer-form-input-wrapper framer-form-select-wrapper framer-1gh8bd"><select name="Nivel"
-                      class="framer-form-input">
-                      <option value disabled selected>Selecciona una opción</option>
+                      class="framer-form-input" required>
+                      <option value="" disabled selected>Selecciona una opción</option>
                       <option value="nivel1">Nivel 1 - Empresa Emergente</option>
                       <option value="nivel2">Nivel 2 - Empresa en Crecimiento</option>
                       <option value="nivel3">Nivel 3 - Empresa en Expansión</option>
                       <option value="nivel4">Nivel 4 - Empresas Grandes</option>
                     </select></div>
-                </label><label class="framer-ipwpkg">
+                </label>
+                  <div class="form-stepper-nav">
+                    <button type="button" class="form-stepper-button form-stepper-button-secondary" data-step-prev>Anterior</button>
+                    <button type="button" class="form-stepper-button" data-step-next>Siguiente</button>
+                  </div>
+                </div>
+                <div class="form-step" data-form-step><label class="framer-ipwpkg">
                   <div class="framer-8r2oi8" style="transform:none" data-framer-component-type="RichTextContainer">
                     <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
                       class="framer-text">Sector</p>
                   </div>
                   <div class="framer-form-input-wrapper framer-form-select-wrapper framer-117e0tw"><select name="Sector"
-                      class="framer-form-input">
-                      <option value disabled selected>Selecciona una opción</option>
+                      class="framer-form-input" required>
+                      <option value="" disabled selected>Selecciona una opción</option>
                       <option value="clinicadental">Clínica Dental</option>
                       <option value="clinicaestetica">Estética</option>
                       <option value="coach">Coach</option>
@@ -3411,22 +3455,34 @@ SolAI.">
                       <option value="infoproductor">Infoproductor</option>
                       <option value="otro">Otro (especifica en Comentarios)</option>
                     </select></div>
-                </label><label class="framer-1e969dw">
+                </label>
+                  <div class="form-stepper-nav">
+                    <button type="button" class="form-stepper-button form-stepper-button-secondary" data-step-prev>Anterior</button>
+                    <button type="button" class="form-stepper-button" data-step-next>Siguiente</button>
+                  </div>
+                </div>
+                <div class="form-step" data-form-step><label class="framer-1e969dw">
                   <div class="framer-6bzxio" style="transform:none" data-framer-component-type="RichTextContainer">
                     <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
                       class="framer-text">Facturación Mensual Aprox.</p>
                   </div>
                   <div class="framer-form-input-wrapper framer-form-select-wrapper framer-19496e8"><select
-                      name="Facturacion" class="framer-form-input">
-                      <option value>Selecciona una opción</option>
-                      <option value="-5k" disabled selected>Menos de 5.000€</option>
+                      name="Facturacion" class="framer-form-input" required>
+                      <option value="" disabled selected>Selecciona una opción</option>
+                      <option value="-5k">Menos de 5.000€</option>
                       <option value="5-10k">Entre 5.000€ y 10.000€</option>
                       <option value="10-20k">Entre 10.000€ y 20.000€</option>
                       <option value="20-50k">Entre 20.000€ y 50.000€</option>
                       <option value="50-100k">Entre 50.000€ y 100.000€</option>
                       <option value="+100k">Más de 100.000€</option>
                     </select></div>
-                </label><label class="framer-fr09oo">
+                </label>
+                  <div class="form-stepper-nav">
+                    <button type="button" class="form-stepper-button form-stepper-button-secondary" data-step-prev>Anterior</button>
+                    <button type="button" class="form-stepper-button" data-step-next>Siguiente</button>
+                  </div>
+                </div>
+                <div class="form-step" data-form-step><label class="framer-fr09oo">
                   <div class="framer-ncx5dj" style="transform:none" data-framer-component-type="RichTextContainer">
                     <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
                       class="framer-text">¿Algo más que quieras comentarnos?</p>
@@ -3434,44 +3490,50 @@ SolAI.">
                   <div class="framer-form-text-input framer-form-input-wrapper framer-17hht9g"><textarea required
                       name="comentario" placeholder="Escribe aquí..." class="framer-form-input"></textarea></div>
                 </label>
-                <div class="ssr-variant hidden-1rhgb77 hidden-1jivxlf">
-                  <div class="framer-1muy388-container"><button type="submit"
-                      class="framer-hKnyw framer-kwamgw framer-v-kwamgw" data-framer-name="Default" data-reset="button"
-                      style="background-color:rgb(51, 51, 51);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;height:100%;width:100%;opacity:1"
-                      tabindex="0">
-                      <div class="framer-fnbuf0"
-                        style="--extracted-r6o4lv:rgb(255, 255, 255);--framer-link-text-color:rgb(0, 153, 255);--framer-link-text-decoration:underline;transform:none"
-                        data-framer-component-type="RichTextContainer">
-                        <p style="--font-selector:SW50ZXItU2VtaUJvbGQ=;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:14px;--framer-font-weight:600;--framer-text-color:var(--extracted-r6o4lv, rgb(255, 255, 255))"
-                          class="framer-text">Enviar</p>
+                  <div class="form-stepper-nav form-stepper-nav-final">
+                    <button type="button" class="form-stepper-button form-stepper-button-secondary" data-step-prev>Anterior</button>
+                    <div class="form-stepper-submit">
+                      <div class="ssr-variant hidden-1rhgb77 hidden-1jivxlf">
+                        <div class="framer-1muy388-container"><button type="submit"
+                            class="framer-hKnyw framer-kwamgw framer-v-kwamgw" data-framer-name="Default" data-reset="button"
+                            style="background-color:rgb(51, 51, 51);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;height:100%;width:100%;opacity:1"
+                            tabindex="0">
+                            <div class="framer-fnbuf0"
+                              style="--extracted-r6o4lv:rgb(255, 255, 255);--framer-link-text-color:rgb(0, 153, 255);--framer-link-text-decoration:underline;transform:none"
+                              data-framer-component-type="RichTextContainer">
+                              <p style="--font-selector:SW50ZXItU2VtaUJvbGQ=;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:14px;--framer-font-weight:600;--framer-text-color:var(--extracted-r6o4lv, rgb(255, 255, 255))"
+                                class="framer-text">Enviar</p>
+                            </div>
+                          </button></div>
                       </div>
-                    </button></div>
-                </div>
-                <div class="ssr-variant hidden-1gm56si hidden-1jivxlf">
-                  <div class="framer-1muy388-container"><button type="submit"
-                      class="framer-hKnyw framer-kwamgw framer-v-kwamgw" data-framer-name="Default" data-reset="button"
-                      style="background-color:rgb(51, 51, 51);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;height:100%;width:100%;opacity:1"
-                      tabindex="0">
-                      <div class="framer-fnbuf0"
-                        style="--extracted-r6o4lv:rgb(255, 255, 255);--framer-link-text-color:rgb(0, 153, 255);--framer-link-text-decoration:underline;transform:none"
-                        data-framer-component-type="RichTextContainer">
-                        <p style="--font-selector:SW50ZXItU2VtaUJvbGQ=;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:14px;--framer-font-weight:600;--framer-text-color:var(--extracted-r6o4lv, rgb(255, 255, 255))"
-                          class="framer-text">Enviar</p>
+                      <div class="ssr-variant hidden-1gm56si hidden-1jivxlf">
+                        <div class="framer-1muy388-container"><button type="submit"
+                            class="framer-hKnyw framer-kwamgw framer-v-kwamgw" data-framer-name="Default" data-reset="button"
+                            style="background-color:rgb(51, 51, 51);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;height:100%;width:100%;opacity:1"
+                            tabindex="0">
+                            <div class="framer-fnbuf0"
+                              style="--extracted-r6o4lv:rgb(255, 255, 255);--framer-link-text-color:rgb(0, 153, 255);--framer-link-text-decoration:underline;transform:none"
+                              data-framer-component-type="RichTextContainer">
+                              <p style="--font-selector:SW50ZXItU2VtaUJvbGQ=;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:14px;--framer-font-weight:600;--framer-text-color:var(--extracted-r6o4lv, rgb(255, 255, 255))"
+                                class="framer-text">Enviar</p>
+                            </div>
+                          </button></div>
                       </div>
-                    </button></div>
-                </div>
-                <div class="ssr-variant hidden-1gm56si hidden-1rhgb77">
-                  <div class="framer-1muy388-container"><button type="submit"
-                      class="framer-hKnyw framer-kwamgw framer-v-kwamgw" data-framer-name="Default" data-reset="button"
-                      style="background-color:rgb(51, 51, 51);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;height:100%;width:100%;opacity:1"
-                      tabindex="0">
-                      <div class="framer-fnbuf0"
-                        style="--extracted-r6o4lv:rgb(255, 255, 255);--framer-link-text-color:rgb(0, 153, 255);--framer-link-text-decoration:underline;transform:none"
-                        data-framer-component-type="RichTextContainer">
-                        <p style="--font-selector:SW50ZXItU2VtaUJvbGQ=;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:14px;--framer-font-weight:600;--framer-text-color:var(--extracted-r6o4lv, rgb(255, 255, 255))"
-                          class="framer-text">Enviar</p>
+                      <div class="ssr-variant hidden-1gm56si hidden-1rhgb77">
+                        <div class="framer-1muy388-container"><button type="submit"
+                            class="framer-hKnyw framer-kwamgw framer-v-kwamgw" data-framer-name="Default" data-reset="button"
+                            style="background-color:rgb(51, 51, 51);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;height:100%;width:100%;opacity:1"
+                            tabindex="0">
+                            <div class="framer-fnbuf0"
+                              style="--extracted-r6o4lv:rgb(255, 255, 255);--framer-link-text-color:rgb(0, 153, 255);--framer-link-text-decoration:underline;transform:none"
+                              data-framer-component-type="RichTextContainer">
+                              <p style="--font-selector:SW50ZXItU2VtaUJvbGQ=;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:14px;--framer-font-weight:600;--framer-text-color:var(--extracted-r6o4lv, rgb(255, 255, 255))"
+                                class="framer-text">Enviar</p>
+                            </div>
+                          </button></div>
                       </div>
-                    </button></div>
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>
@@ -3771,6 +3833,78 @@ SolAI.">
     id="__framer__appearAnimationsContent">{"1sa0re2":{"default":{"initial":{"opacity":0.001,"rotate":0,"rotateX":0,"rotateY":0,"scale":1,"skewX":0,"skewY":0,"x":0,"y":0},"animate":{"opacity":1,"rotate":0,"rotateX":0,"rotateY":0,"scale":1,"skewX":0,"skewY":0,"transition":{"delay":0.8,"duration":0.3,"ease":[0,0,1,1],"type":"tween"},"x":0,"y":0}}},"12zesfi":{"default":{"initial":{"opacity":0.001,"rotate":0,"rotateX":0,"rotateY":0,"scale":1,"skewX":0,"skewY":0,"x":0,"y":0},"animate":{"opacity":1,"rotate":0,"rotateX":0,"rotateY":0,"scale":1,"skewX":0,"skewY":0,"transition":{"delay":0,"duration":0.6,"ease":[0.75,0,0.22,1],"type":"tween"},"x":0,"y":0}}},"1vwetbq":{"default":{"initial":{"opacity":0.001,"rotate":0,"rotateX":0,"rotateY":0,"scale":1,"skewX":0,"skewY":0,"x":0,"y":0},"animate":{"opacity":1,"rotate":0,"rotateX":0,"rotateY":0,"scale":1,"skewX":0,"skewY":0,"transition":{"delay":0,"duration":0.6,"ease":[0.87,0.01,0.26,1],"type":"tween"},"x":0,"y":0}}}}</script>
   <script type="framer/appear"
     id="__framer__breakpoints">[{"hash":"1gm56si","mediaQuery":"(min-width: 1200px)"},{"hash":"1jivxlf","mediaQuery":"(min-width: 810px) and (max-width: 1199.98px)"},{"hash":"1rhgb77","mediaQuery":"(max-width: 809.98px)"},{"hash":"6rg2se","mediaQuery":"(min-width: 1200px)"},{"hash":"148qidq","mediaQuery":"(min-width: 810px) and (max-width: 1199.98px)"},{"hash":"1hbu3yw","mediaQuery":"(max-width: 809.98px)"}]</script>
+  <script>
+    (() => {
+      const forms = document.querySelectorAll(".framer-12zesfi");
+      if (!forms.length) return;
+
+      const getFields = step => Array.from(step.querySelectorAll("input, select, textarea"));
+
+      forms.forEach(form => {
+        const steps = Array.from(form.querySelectorAll(".form-step"));
+        if (!steps.length) return;
+
+        let current = 0;
+        const indicator = form.querySelector("[data-step-indicator]");
+
+        const setActive = () => {
+          steps.forEach((step, index) => {
+            const active = index === current;
+            step.classList.toggle("form-step-active", active);
+            step.setAttribute("aria-hidden", active ? "false" : "true");
+          });
+          if (indicator) indicator.textContent = `PASO ${current + 1} DE ${steps.length}`;
+          form.setAttribute("data-stepper-current", String(current));
+          if (document.body) document.body.setAttribute("data-stepper-ready", "true");
+        };
+
+        const validate = () => {
+          const fields = getFields(steps[current]);
+          for (const field of fields) {
+            if (!field.checkValidity()) {
+              field.reportValidity();
+              if (typeof field.focus === "function") field.focus();
+              return false;
+            }
+          }
+          return true;
+        };
+
+        form.querySelectorAll("[data-step-next]").forEach(button => {
+          button.addEventListener("click", event => {
+            event.preventDefault();
+            if (!validate()) return;
+            if (current < steps.length - 1) {
+              current += 1;
+              setActive();
+            }
+          });
+        });
+
+        form.querySelectorAll("[data-step-prev]").forEach(button => {
+          button.addEventListener("click", event => {
+            event.preventDefault();
+            if (current > 0) {
+              current -= 1;
+              setActive();
+            }
+          });
+        });
+
+        form.addEventListener("keydown", event => {
+          if (event.key !== "Enter") return;
+          if (current >= steps.length - 1) return;
+          if (!steps[current].contains(event.target)) return;
+          event.preventDefault();
+          if (!validate()) return;
+          current += 1;
+          setActive();
+        });
+
+        setActive();
+      });
+    })();
+  </script>
   <script
     data-framer-appear-animation="no-preference">(() => { function c(i, o, m) { if (window.__framer_disable_appear_effects_optimization__ || typeof animator > "u") return; let e = { detail: { bg: document.hidden } }; requestAnimationFrame(() => { let a = "framer-appear-start"; performance.mark(a, e), animator.animateAppearEffects(JSON.parse(window.__framer__appearAnimationsContent.text), (s, p, d) => { let t = document.querySelector(s); if (t) for (let [r, f] of Object.entries(p)) animator.startOptimizedAppearAnimation(t, r, f, d[r]) }, i, o, m && window.matchMedia("(prefers-reduced-motion:reduce)").matches === !0, animator.getActiveVariantHash(JSON.parse(window.__framer__breakpoints.text))); let n = "framer-appear-end"; performance.mark(n, e), performance.measure("framer-appear", { start: a, end: n, detail: e.detail }) }) } return c })()("data-framer-appear-id", "__Appear_Animation_Transform__", false)</script>
   <link rel="modulepreload" fetchpriority="low"
