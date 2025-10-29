@@ -9,6 +9,27 @@
   <script>try { if (localStorage.get("__framer_force_showing_editorbar_since")) { const n = document.createElement("link"); n.rel = "modulepreload"; n.href = "https://framer.com/edit/init.mjs"; document.head.appendChild(n) } } catch (e) { }</script>
   <!-- Start of headStart -->
 
+  <!-- Anti-stale caching + Framer bundle bust + SW unregister -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <script>
+    (function(){
+      // 1) Unregister any Service Workers that might be caching old HTML/assets
+      if ("serviceWorker" in navigator) {
+        try { navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister())); } catch(e) {}
+      }
+      // 2) Add a cache-busting version to Framer assets so first load already uses latest
+      const VERSION = "v2025-10-29-1"; // bump when you deploy
+      function bust(u){ return u + (u.includes("?") ? "&" : "?") + "v=" + VERSION; }
+      function bumpAttr(el, attr){ const u = el.getAttribute(attr); if(!u) return; if(/framerusercontent\.com|framer\.com/.test(u)) el.setAttribute(attr, bust(u)); }
+      document.addEventListener("DOMContentLoaded", function(){
+        // script/link tags already in DOM
+        document.querySelectorAll('script[src]').forEach(s=>bumpAttr(s,'src'));
+        document.querySelectorAll('link[rel="modulepreload"], link[rel="preload"], link[rel="stylesheet"]').forEach(l=>bumpAttr(l,'href'));
+      });
+    })();
+  </script>
   <!-- End of headStart -->
   <meta name="viewport" content="width=device-width">
   <meta name="generator" content="Framer 3406f4c">
