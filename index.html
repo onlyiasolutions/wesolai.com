@@ -10237,8 +10237,10 @@
   </div>
   <script>
     (() => {
-      if (window.__solaiStepperInit) return;
-      window.__solaiStepperInit = true;
+      if (typeof window.__solaiStepperInit === "function") {
+        window.__solaiStepperInit();
+        return;
+      }
 
       if (!document.getElementById("solai-stepper-style")) {
         const style = document.createElement("style");
@@ -10482,6 +10484,8 @@
         }, 250);
       };
 
+      window.__solaiStepperInit = scheduleInitialize;
+
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", scheduleInitialize);
       } else {
@@ -10500,8 +10504,10 @@
   </script>
   <script>
     (() => {
-      if (window.__solaiContactPatchInit) return;
-      window.__solaiContactPatchInit = true;
+      if (typeof window.__solaiContactPatchInit === "function") {
+        window.__solaiContactPatchInit();
+        return;
+      }
 
       const EMAIL = "hola@wesolai.com";
       const IG_URL = "https://instagram.com/wesolailabs";
@@ -10598,6 +10604,7 @@
       }
 
       const start = () => patchOnce();
+      window.__solaiContactPatchInit = start;
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", start, { once: true });
       } else {
