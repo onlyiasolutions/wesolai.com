@@ -4498,29 +4498,23 @@
       const attributeReplacements = [
         {
           attribute: "href",
-          needles: [
-            "mailto:hola@onlyiasolutions.com",
-            "mailto: hola@onlyiasolutions.com"
-          ],
+          match: value => value.toLowerCase().includes("mailto:hola@onlyiasolutions.com"),
           replacement: "mailto:hola@wesolai.com"
         },
         {
           attribute: "href",
-          needles: [
-            "https://www.instagram.com/onlyiasolutions",
-            "https://instagram.com/onlyiasolutions"
-          ],
+          match: value => value.toLowerCase().includes("instagram.com/onlyiasolutions"),
           replacement: "https://www.instagram.com/wesolailabs"
         }
       ];
       const textReplacements = [
         {
-          needles: ["hola@onlyiasolutions.com"],
-          replacement: "hola@wesolai.com"
+          match: value => value.toLowerCase().includes("hola@onlyiasolutions.com"),
+          replacer: value => value.replace(/hola@onlyiasolutions\.com/gi, "hola@wesolai.com")
         },
         {
-          needles: ["instagram.com/onlyiasolutions"],
-          replacement: "instagram.com/wesolailabs"
+          match: value => value.toLowerCase().includes("instagram.com/onlyiasolutions"),
+          replacer: value => value.replace(/instagram\.com\/onlyiasolutions\/?/gi, "instagram.com/wesolailabs")
         }
       ];
       const replaceTextNodes = () => {
@@ -4528,12 +4522,8 @@
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
         const applyTextReplacement = value => {
           let updated = value;
-          for (const { needles, replacement } of textReplacements) {
-            for (const needle of needles) {
-              if (updated.includes(needle)) {
-                updated = updated.split(needle).join(replacement);
-              }
-            }
+          for (const { match, replacer } of textReplacements) {
+            if (match(updated)) updated = replacer(updated);
           }
           return updated;
         };
@@ -4549,17 +4539,17 @@
       };
       const replaceAttributes = () => {
         let mutated = false;
-        for (const { attribute, needles, replacement } of attributeReplacements) {
+        for (const { attribute, match, replacement } of attributeReplacements) {
           const elements = document.querySelectorAll(`[${attribute}]`);
           elements.forEach(element => {
             const current = element.getAttribute(attribute);
             if (!current) return;
-            for (const needle of needles) {
-              if (current.includes(needle) && current !== replacement) {
-                element.setAttribute(attribute, replacement);
-                mutated = true;
-                break;
-              }
+            if (match(current) && current !== replacement) {
+              element.setAttribute(attribute, replacement);
+              mutated = true;
+            }
+            if (attribute === "href" && element instanceof HTMLAnchorElement && match(element.href) && element.href !== replacement) {
+              element.href = replacement;
             }
           });
         }
@@ -4572,11 +4562,18 @@
       };
       const init = () => {
         applyReplacements();
+        let runs = 0;
+        const maxRuns = 20;
+        const interval = setInterval(() => {
+          applyReplacements();
+          runs += 1;
+          if (runs >= maxRuns) clearInterval(interval);
+        }, 250);
         const observer = new MutationObserver(() => {
           const changed = applyReplacements();
           if (!changed) return;
         });
-        observer.observe(document.body, { subtree: true, childList: true, characterData: true });
+        observer.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true });
       };
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", init);
