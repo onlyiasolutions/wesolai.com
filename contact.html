@@ -4498,14 +4498,14 @@
       const attributeReplacements = [
         {
           attribute: "href",
-          match: value => value.toLowerCase().includes("onlyiasolutions.com"),
+          match: value => value.toLowerCase().includes("wesolai.com"),
           replacement: attrValue => attrValue.toLowerCase().includes("instagram.com")
             ? "https://www.instagram.com/wesolailabs"
             : "mailto:hola@wesolai.com"
         },
         {
           attribute: "data-framer-link",
-          match: value => value.toLowerCase().includes("onlyiasolutions.com"),
+          match: value => value.toLowerCase().includes("wesolai.com"),
           replacement: attrValue => attrValue.toLowerCase().includes("instagram.com")
             ? "https://www.instagram.com/wesolailabs"
             : "mailto:hola@wesolai.com"
@@ -4513,7 +4513,7 @@
       ];
       const textReplacements = [
         {
-          match: value => value.toLowerCase().includes("onlyiasolutions.com"),
+          match: value => value.toLowerCase().includes("wesolai.com"),
           replacer: value => value
             .replace(/hola@onlyiasolutions\.com/gi, "hola@wesolai.com")
             .replace(/landio@support\.com/gi, "hola@wesolai.com")
