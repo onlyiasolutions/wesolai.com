@@ -4493,6 +4493,98 @@
         stroke="var(--21h8s6, rgb(0, 0, 0))" transform="translate(21.503 5.25)" width="1px" />
     </svg>
   </div>
+  <script>
+    (() => {
+      const attributeReplacements = [
+        {
+          attribute: "href",
+          needles: [
+            "mailto:hola@onlyiasolutions.com",
+            "mailto: hola@onlyiasolutions.com"
+          ],
+          replacement: "mailto:hola@wesolai.com"
+        },
+        {
+          attribute: "href",
+          needles: [
+            "https://www.instagram.com/onlyiasolutions",
+            "https://instagram.com/onlyiasolutions"
+          ],
+          replacement: "https://www.instagram.com/wesolailabs"
+        }
+      ];
+      const textReplacements = [
+        {
+          needles: ["hola@onlyiasolutions.com"],
+          replacement: "hola@wesolai.com"
+        },
+        {
+          needles: ["instagram.com/onlyiasolutions"],
+          replacement: "instagram.com/wesolailabs"
+        }
+      ];
+      const replaceTextNodes = () => {
+        let mutated = false;
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        const applyTextReplacement = value => {
+          let updated = value;
+          for (const { needles, replacement } of textReplacements) {
+            for (const needle of needles) {
+              if (updated.includes(needle)) {
+                updated = updated.split(needle).join(replacement);
+              }
+            }
+          }
+          return updated;
+        };
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          const newValue = applyTextReplacement(node.nodeValue);
+          if (newValue !== node.nodeValue) {
+            node.nodeValue = newValue;
+            mutated = true;
+          }
+        }
+        return mutated;
+      };
+      const replaceAttributes = () => {
+        let mutated = false;
+        for (const { attribute, needles, replacement } of attributeReplacements) {
+          const elements = document.querySelectorAll(`[${attribute}]`);
+          elements.forEach(element => {
+            const current = element.getAttribute(attribute);
+            if (!current) return;
+            for (const needle of needles) {
+              if (current.includes(needle) && current !== replacement) {
+                element.setAttribute(attribute, replacement);
+                mutated = true;
+                break;
+              }
+            }
+          });
+        }
+        return mutated;
+      };
+      const applyReplacements = () => {
+        const attrChanged = replaceAttributes();
+        const textChanged = replaceTextNodes();
+        return attrChanged || textChanged;
+      };
+      const init = () => {
+        applyReplacements();
+        const observer = new MutationObserver(() => {
+          const changed = applyReplacements();
+          if (!changed) return;
+        });
+        observer.observe(document.body, { subtree: true, childList: true, characterData: true });
+      };
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+    })();
+  </script>
   <!-- Start of bodyEnd -->
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T747VHRK" height="0" width="0"
