@@ -7,7 +7,31 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
+  <script>
+// 1) Mata service workers antiguos que puedan estar sirviendo HTML cacheado
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations()
+    .then(regs => regs.forEach(reg => reg.unregister().catch(()=>{})))
+    .catch(()=>{});
+}
+</script>
 
+<script>
+// 2) Bypass de caché forzando parámetro de versión en /form (solo una vez)
+(function(){
+  try{
+    var url = new URL(window.location.href);
+    if ((url.pathname === '/form' || url.pathname.endsWith('/form'))){
+      var KEY = 'v';
+      var VAL = '2025-10-29-01'; // cambia este valor si vuelves a desplegar
+      if (url.searchParams.get(KEY) !== VAL) {
+        url.searchParams.set(KEY, VAL);
+        window.location.replace(url.toString());
+      }
+    }
+  }catch(e){}
+})();
+</script>  
 
   <script>try { if (localStorage.get("__framer_force_showing_editorbar_since")) { const n = document.createElement("link"); n.rel = "modulepreload"; n.href = "https://framer.com/edit/init.mjs"; document.head.appendChild(n) } } catch (e) { }</script>
   <!-- Start of headStart -->
