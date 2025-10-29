@@ -3821,14 +3821,34 @@ SolAI.">
                     document.querySelectorAll(".framer-12zesfi").forEach(setupStepper);
                   };
 
-                  if (document.readyState === "loading") {
-                    document.addEventListener("DOMContentLoaded", initialize);
-                  } else {
+                  let refreshInterval = null;
+                  const scheduleInitialize = () => {
                     initialize();
+                    if (refreshInterval !== null) return;
+                    let attempts = 0;
+                    const maxAttempts = 40;
+                    refreshInterval = setInterval(() => {
+                      initialize();
+                      attempts += 1;
+                      if (attempts >= maxAttempts) {
+                        clearInterval(refreshInterval);
+                        refreshInterval = null;
+                      }
+                    }, 250);
+                  };
+
+                  if (document.readyState === "loading") {
+                    document.addEventListener("DOMContentLoaded", scheduleInitialize);
+                  } else {
+                    scheduleInitialize();
                   }
 
+                  window.addEventListener("pageshow", () => {
+                    scheduleInitialize();
+                  });
+
                   const observer = new MutationObserver(() => {
-                    initialize();
+                    scheduleInitialize();
                   });
                   observer.observe(document.documentElement, { childList: true, subtree: true });
                 })();

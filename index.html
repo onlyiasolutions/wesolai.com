@@ -10214,6 +10214,374 @@
         transform="translate(2.254 3.027)" width="13.115093972763036px" />
     </svg>
   </div>
+  <script>
+    (() => {
+      if (window.__solaiStepperInit) return;
+      window.__solaiStepperInit = true;
+
+      const STEP_BLUEPRINT = [
+        ["Nombre", "Apellidos", "Email", "Teléfono"],
+        ["Web Empresa"],
+        ["Nivel de tu Empresa"],
+        ["Sector"],
+        ["Facturación Mensual Aprox."],
+        ["¿Algo más que quieras comentarnos?"]
+      ];
+
+      const normalize = value => value.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      const ensureStructure = form => {
+        if (form.dataset.stepperStructure === "true") return true;
+        if (form.querySelector("[data-form-step]")) {
+          form.dataset.stepperStructure = "true";
+          return true;
+        }
+
+        const labels = Array.from(form.querySelectorAll("label"));
+        if (!labels.length) return false;
+
+        const submitVariants = Array.from(form.querySelectorAll(".framer-1muy388-container")).map(container => {
+          const wrapper = container.closest(".ssr-variant");
+          return wrapper ?? container;
+        });
+        submitVariants.forEach(node => node.remove());
+
+        let progress = form.querySelector(".form-stepper-progress");
+        if (!progress) {
+          progress = document.createElement("div");
+          progress.className = "form-stepper-progress";
+          progress.setAttribute("aria-live", "polite");
+          const labelSpan = document.createElement("span");
+          labelSpan.className = "form-stepper-progress-label";
+          labelSpan.textContent = "Progreso";
+          const indicatorSpan = document.createElement("span");
+          indicatorSpan.setAttribute("data-step-indicator", "");
+          progress.append(labelSpan, indicatorSpan);
+          form.prepend(progress);
+        } else if (!progress.querySelector("[data-step-indicator]")) {
+          const indicatorSpan = document.createElement("span");
+          indicatorSpan.setAttribute("data-step-indicator", "");
+          progress.appendChild(indicatorSpan);
+        }
+
+        const used = new Set();
+        const findLabel = keyword => {
+          const normalizedKeyword = normalize(keyword);
+          for (const label of labels) {
+            if (used.has(label)) continue;
+            const text = normalize(label.textContent || "");
+            if (text.includes(normalizedKeyword)) {
+              used.add(label);
+              return label;
+            }
+          }
+          return null;
+        };
+
+        const createdSteps = [];
+        STEP_BLUEPRINT.forEach((keywords, index) => {
+          const step = document.createElement("div");
+          step.className = "form-step";
+          step.setAttribute("data-form-step", "");
+          step.setAttribute("aria-hidden", "true");
+          keywords.forEach(keyword => {
+            const label = findLabel(keyword);
+            if (label) step.appendChild(label);
+          });
+          form.appendChild(step);
+          createdSteps.push(step);
+        });
+
+        const leftoverLabels = labels.filter(label => !used.has(label));
+        if (leftoverLabels.length) {
+          const fallbackStep = createdSteps[createdSteps.length - 1] ?? createdSteps[0];
+          leftoverLabels.forEach(label => fallbackStep.appendChild(label));
+        }
+
+        createdSteps.forEach((step, index) => {
+          let nav = step.querySelector(".form-stepper-nav");
+          if (!nav) {
+            nav = document.createElement("div");
+            nav.className = "form-stepper-nav";
+            step.appendChild(nav);
+          } else {
+            nav.innerHTML = "";
+          }
+          if (index > 0) {
+            const prevButton = document.createElement("button");
+            prevButton.type = "button";
+            prevButton.className = "form-stepper-button form-stepper-button-secondary";
+            prevButton.setAttribute("data-step-prev", "");
+            prevButton.textContent = "Anterior";
+            nav.appendChild(prevButton);
+          }
+          if (index < createdSteps.length - 1) {
+            const nextButton = document.createElement("button");
+            nextButton.type = "button";
+            nextButton.className = "form-stepper-button";
+            nextButton.setAttribute("data-step-next", "");
+            nextButton.textContent = "Siguiente";
+            nav.appendChild(nextButton);
+          } else {
+            nav.classList.add("form-stepper-nav-final");
+            submitVariants.forEach(node => nav.appendChild(node));
+          }
+        });
+
+        form.dataset.stepperStructure = "true";
+        return true;
+      };
+
+      const setupStepper = form => {
+        if (form.dataset.stepperReady === "true") return;
+        if (!ensureStructure(form)) return;
+
+        const steps = Array.from(form.querySelectorAll("[data-form-step]"));
+        if (!steps.length) return;
+
+        const indicator = form.querySelector("[data-step-indicator]");
+        const totalSteps = steps.length;
+        let currentIndex = 0;
+
+        const focusableSelector = "input, select, textarea, button, [tabindex]";
+        const toggleStep = targetIndex => {
+          currentIndex = Math.max(0, Math.min(targetIndex, totalSteps - 1));
+          steps.forEach((step, index) => {
+            const isActive = index === currentIndex;
+            step.classList.toggle("form-step-active", isActive);
+            step.setAttribute("aria-hidden", isActive ? "false" : "true");
+            const focusables = step.querySelectorAll(focusableSelector);
+            focusables.forEach(element => {
+              if (!(element instanceof HTMLElement)) return;
+              if (isActive) {
+                const stored = element.getAttribute("data-original-tabindex");
+                if (stored !== null) {
+                  if (stored === "") element.removeAttribute("tabindex");
+                  else element.setAttribute("tabindex", stored);
+                  element.removeAttribute("data-original-tabindex");
+                } else {
+                  element.removeAttribute("tabindex");
+                }
+              } else {
+                if (!element.hasAttribute("data-original-tabindex")) {
+                  const existing = element.getAttribute("tabindex");
+                  if (existing !== null) element.setAttribute("data-original-tabindex", existing);
+                  else element.setAttribute("data-original-tabindex", "");
+                }
+                element.setAttribute("tabindex", "-1");
+              }
+            });
+          });
+          if (indicator) indicator.textContent = `Paso ${currentIndex + 1} de ${totalSteps}`;
+        };
+
+        const validateCurrentStep = () => {
+          const currentStep = steps[currentIndex];
+          const fields = Array.from(currentStep.querySelectorAll("input, select, textarea"));
+          for (const field of fields) {
+            if (!field.checkValidity()) {
+              field.reportValidity();
+              if (typeof field.focus === "function") field.focus();
+              return false;
+            }
+          }
+          return true;
+        };
+
+        form.addEventListener("click", event => {
+          const target = event.target instanceof HTMLElement ? event.target : null;
+          if (!target) return;
+          const nextButton = target.closest("[data-step-next]");
+          if (nextButton) {
+            event.preventDefault();
+            if (!validateCurrentStep()) return;
+            if (currentIndex < totalSteps - 1) toggleStep(currentIndex + 1);
+            return;
+          }
+          const prevButton = target.closest("[data-step-prev]");
+          if (prevButton) {
+            event.preventDefault();
+            if (currentIndex > 0) toggleStep(currentIndex - 1);
+          }
+        });
+
+        form.addEventListener("keydown", event => {
+          if (event.key !== "Enter") return;
+          if (currentIndex >= totalSteps - 1) return;
+          const activeStep = steps[currentIndex];
+          if (!activeStep.contains(event.target)) return;
+          event.preventDefault();
+          if (validateCurrentStep()) toggleStep(currentIndex + 1);
+        });
+
+        toggleStep(0);
+        form.dataset.stepperReady = "true";
+      };
+
+      const initialize = () => {
+        document.querySelectorAll(".framer-12zesfi").forEach(setupStepper);
+      };
+
+      let refreshInterval = null;
+      const scheduleInitialize = () => {
+        initialize();
+        if (refreshInterval !== null) return;
+        let attempts = 0;
+        const maxAttempts = 40;
+        refreshInterval = setInterval(() => {
+          initialize();
+          attempts += 1;
+          if (attempts >= maxAttempts) {
+            clearInterval(refreshInterval);
+            refreshInterval = null;
+          }
+        }, 250);
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", scheduleInitialize);
+      } else {
+        scheduleInitialize();
+      }
+
+      window.addEventListener("pageshow", () => {
+        scheduleInitialize();
+      });
+
+      const observer = new MutationObserver(() => {
+        scheduleInitialize();
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    })();
+  </script>
+  <script>
+    (() => {
+      if (window.__solaiContactPatchInit) return;
+      window.__solaiContactPatchInit = true;
+
+      const EMAIL = "hola@wesolai.com";
+      const IG_URL = "https://instagram.com/wesolailabs";
+
+      const BAD_EMAILS = [/hola@onlyiasolutions\.com/i, /landio@support\.com/i];
+      const BAD_HOSTS = [/instagram\.com\/onlyiasolutions/i, /onlyiasolutions\.com/i];
+
+      function replaceInAttributes(el) {
+        for (const attr of el.getAttributeNames()) {
+          const val = el.getAttribute(attr);
+          if (typeof val !== "string") continue;
+
+          let newVal = val
+            .replace(/mailto:\s*hola@onlyiasolutions\.com/gi, "mailto:" + EMAIL)
+            .replace(/mailto:\s*landio@support\.com/gi, "mailto:" + EMAIL)
+            .replace(/instagram\.com\/onlyiasolutions/gi, "instagram.com/wesolailabs")
+            .replace(/onlyiasolutions\.com/gi, "wesolai.com");
+
+          if (attr === "href") {
+            if (/^mailto:/i.test(newVal)) {
+              newVal = "mailto:" + EMAIL;
+            } else if (/instagram\.com/i.test(newVal)) {
+              newVal = IG_URL;
+            }
+          }
+
+          if (newVal !== val) el.setAttribute(attr, newVal);
+        }
+      }
+
+      function fixAnchor(a) {
+        if (!(a instanceof HTMLAnchorElement)) return;
+
+        const href = a.getAttribute("href") || "";
+        if (href.startsWith("mailto:")) {
+          a.setAttribute("href", "mailto:" + EMAIL);
+          a.removeAttribute("target");
+          a.removeAttribute("rel");
+        } else if (/instagram\.com/i.test(href)) {
+          a.setAttribute("href", IG_URL);
+          a.setAttribute("target", "_blank");
+          a.setAttribute("rel", "noopener");
+        }
+
+        const txt = (a.textContent || "").trim();
+        if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(txt) && txt.toLowerCase() !== EMAIL.toLowerCase()) {
+          a.textContent = EMAIL;
+        }
+
+        replaceInAttributes(a);
+      }
+
+      function patchOnce(root = document) {
+        (root.querySelectorAll?.("a") ?? []).forEach(fixAnchor);
+
+        (root.querySelectorAll?.("*") ?? []).forEach(replaceInAttributes);
+
+        const scope = root.body ?? root;
+        if (!scope) return;
+        const walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT);
+        let node;
+        while ((node = walker.nextNode())) {
+          let t = node.nodeValue;
+          if (!t) continue;
+          BAD_EMAILS.forEach(re => (t = t.replace(re, EMAIL)));
+          BAD_HOSTS.forEach(re => (t = t.replace(re, m => m.replace(/onlyiasolutions\.com/i, "wesolai.com"))));
+          node.nodeValue = t;
+        }
+      }
+
+      function getAnchorFromEvent(e) {
+        let el = e.target;
+        while (el && el !== document && !(el instanceof HTMLAnchorElement)) el = el.parentNode;
+        return el instanceof HTMLAnchorElement ? el : null;
+      }
+
+      function intercept(e) {
+        const a = getAnchorFromEvent(e);
+        if (!a) return;
+        const href = (a.getAttribute("href") || "").trim();
+
+        if (href.startsWith("mailto:")) {
+          e.preventDefault();
+          a.setAttribute("href", "mailto:" + EMAIL);
+          a.textContent = EMAIL;
+          window.location.href = "mailto:" + EMAIL;
+        } else if (/instagram\.com/i.test(href)) {
+          e.preventDefault();
+          a.setAttribute("href", IG_URL);
+          a.setAttribute("target", "_blank");
+          a.setAttribute("rel", "noopener");
+          window.open(IG_URL, "_blank", "noopener");
+        }
+      }
+
+      const start = () => patchOnce();
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", start, { once: true });
+      } else {
+        start();
+      }
+
+      window.addEventListener("load", () => {
+        let i = 0;
+        const iv = setInterval(() => {
+          patchOnce();
+          if (++i > 40) clearInterval(iv);
+        }, 500);
+      });
+
+      new MutationObserver(mutations => {
+        for (const m of mutations) {
+          if (m.addedNodes && m.addedNodes.length) {
+            patchOnce();
+            break;
+          }
+        }
+      }).observe(document.documentElement, { childList: true, subtree: true });
+
+      document.addEventListener("click", intercept, true);
+      document.addEventListener("pointerdown", intercept, true);
+      document.addEventListener("touchstart", intercept, true);
+    })();
+  </script>
   <!-- Start of bodyEnd -->
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T747VHRK" height="0" width="0"
