@@ -2042,12 +2042,13 @@ SolAI.">
 
     .framer-EWKkU .framer-1sa0re2-container {
       will-change: var(--framer-will-change-effect-override, transform);
-      z-index: 0;
+      z-index: 1;
       flex: none;
-      height: 100%;
+      height: 1368px;
       position: absolute;
-      inset: 0;
-      pointer-events: none
+      top: 0;
+      left: 0;
+      right: 0
     }
 
     .framer-EWKkU .framer-ivc27i {
@@ -2055,46 +2056,15 @@ SolAI.">
       background-color: #0000;
       flex-flow: column;
       flex: none;
-      place-content: flex-start;
+      place-content: center;
       align-items: center;
-      gap: 24px;
-      width: 100%;
-      height: auto;
-      padding: 56px 24px 88px;
+      gap: 0;
+      width: 1200px;
+      height: 1288px;
+      padding: 20px;
       display: flex;
       position: relative;
       overflow: hidden
-    }
-
-    .framer-EWKkU .framer-ivc27i::before {
-      content: "";
-      position: absolute;
-      inset: -45% -25%;
-      background-image:
-        radial-gradient(ellipse at 18% 28%, rgba(78, 143, 255, 0.32) 0%, transparent 55%),
-        radial-gradient(ellipse at 82% 30%, rgba(146, 102, 255, 0.28) 0%, transparent 60%),
-        radial-gradient(ellipse at 48% 78%, rgba(42, 200, 255, 0.26) 0%, transparent 55%);
-      animation: hero-liquid-shift 22s ease-in-out infinite alternate;
-      opacity: 0.85;
-      pointer-events: none;
-      mix-blend-mode: screen;
-      transform: translate3d(0, 0, 0);
-      z-index: 0
-    }
-
-    .framer-EWKkU .framer-ivc27i::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(160deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 55%);
-      opacity: 0.35;
-      pointer-events: none;
-      z-index: 0
-    }
-
-    .framer-EWKkU .framer-ivc27i > * {
-      position: relative;
-      z-index: 1
     }
 
     .framer-EWKkU .framer-18cv88e {
@@ -2105,9 +2075,9 @@ SolAI.">
       place-content: center;
       align-items: center;
       gap: 0;
-      width: min(100%, 720px);
-      height: auto;
-      padding: 0;
+      width: 789px;
+      height: 179px;
+      padding: 20px;
       display: flex;
       position: relative;
       overflow: hidden
@@ -2126,21 +2096,19 @@ SolAI.">
 
     .framer-EWKkU .framer-bmvok9 {
       will-change: var(--framer-will-change-override, transform);
-      background-color: rgba(8, 12, 20, 0.7);
-      border-radius: 24px;
-      border: 1px solid rgba(216, 231, 242, 0.12);
+      background-color: #000000d6;
+      border-radius: 21px;
       flex-flow: column;
       flex: none;
       place-content: center;
       align-items: center;
-      gap: 36px;
-      width: min(100%, 760px);
-      height: auto;
-      padding: 48px;
+      gap: 40px;
+      width: 80%;
+      height: 1003px;
+      padding: 20px;
       display: flex;
       position: relative;
-      overflow: hidden;
-      box-shadow: 0 28px 68px -46px rgba(9, 24, 54, 0.65), inset 0 2px 1px rgba(207, 231, 255, 0.15)
+      overflow: hidden
     }
 
     .framer-EWKkU .framer-7el4zz {
@@ -2151,7 +2119,7 @@ SolAI.">
       gap: 0;
       width: 100%;
       height: min-content;
-      padding: 0;
+      padding: 21px 0;
       display: flex;
       position: relative;
       overflow: visible
@@ -2165,145 +2133,12 @@ SolAI.">
       flex-flow: column;
       flex: none;
       place-content: flex-start;
-      align-items: stretch;
-      gap: 28px;
-      width: 100%;
-      max-width: 640px;
-      padding: 0;
-      margin: 0 auto;
+      align-items: flex-start;
+      gap: 20px;
+      width: 888px;
+      padding: 20px;
       display: flex;
       position: relative
-    }
-
-    body:not([data-stepper-ready]) .framer-12zesfi {
-      opacity: 0;
-      pointer-events: none
-    }
-
-    body[data-stepper-ready] .framer-12zesfi {
-      opacity: 1;
-      pointer-events: auto;
-      transition: opacity .25s ease
-    }
-
-    .framer-EWKkU .form-step {
-      display: none !important;
-      flex-direction: column;
-      gap: 18px;
-      width: 100%
-    }
-
-    .framer-EWKkU .form-step.form-step-active {
-      display: flex !important
-    }
-
-    .framer-EWKkU .form-stepper-progress {
-      width: 100%;
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      padding: 8px 2px 20px;
-      color: rgba(213, 219, 230, 0.9);
-      font-family: "Inter", "Inter Placeholder", sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      border-bottom: 1px solid rgba(213, 219, 230, 0.18)
-    }
-
-    .framer-EWKkU .form-stepper-progress-label {
-      font-weight: 500;
-      opacity: .75
-    }
-
-    .framer-EWKkU [data-step-indicator] {
-      font-weight: 600
-    }
-
-    .framer-EWKkU .form-step {
-      display: none;
-      flex-direction: column;
-      gap: 20px;
-      width: 100%
-    }
-
-    .framer-EWKkU .form-step.form-step-active {
-      display: flex
-    }
-
-    .framer-EWKkU .form-stepper-nav {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 12px
-    }
-
-    .framer-EWKkU .form-stepper-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 14px 26px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      background-color: rgb(51, 51, 51);
-      color: rgb(255, 255, 255);
-      font-family: "Inter", "Inter Placeholder", sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease
-    }
-
-    .framer-EWKkU .form-stepper-button:hover {
-      transform: translateY(-1px);
-      background-color: #3d4250
-    }
-
-    .framer-EWKkU .form-stepper-button:focus-visible {
-      outline: 2px solid rgba(213, 219, 230, 0.6);
-      outline-offset: 2px
-    }
-
-    .framer-EWKkU .form-stepper-button-secondary {
-      background-color: transparent;
-      color: rgba(213, 219, 230, 0.85);
-      border: 1px solid rgba(213, 219, 230, 0.35)
-    }
-
-    .framer-EWKkU .form-stepper-button-secondary:hover {
-      background-color: rgba(213, 219, 230, 0.08)
-    }
-
-    .framer-EWKkU .form-stepper-button[data-step-submit] {
-      background-color: #4a75ff;
-      box-shadow: 0 12px 30px -18px rgba(74, 117, 255, 0.8)
-    }
-
-    .framer-EWKkU .form-stepper-button[data-step-submit]:hover {
-      background-color: #5b85ff
-    }
-
-    .framer-EWKkU .form-stepper-button[disabled] {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none
-    }
-
-    @keyframes hero-liquid-shift {
-      0% {
-        transform: translate3d(-6%, -4%, 0) scale(1.05) rotate(0deg)
-      }
-
-      50% {
-        transform: translate3d(4%, 7%, 0) scale(1.12) rotate(5deg)
-      }
-
-      100% {
-        transform: translate3d(-4%, 3%, 0) scale(1.07) rotate(-4deg)
-      }
     }
 
     .framer-EWKkU .framer-uh6uw2 {
@@ -2427,7 +2262,7 @@ SolAI.">
       place-content: flex-start;
       align-items: flex-start;
       gap: 10px;
-      width: 100%;
+      width: 850px;
       height: min-content;
       padding: 0;
       display: flex;
@@ -2524,19 +2359,28 @@ SolAI.">
       }
 
       .framer-EWKkU .framer-bmvok9 {
-        width: min(100%, 720px);
-        padding: 40px
+        width: 60%;
+        height: 990px
+      }
+
+      .framer-EWKkU .framer-12zesfi {
+        width: 678px
       }
 
       .framer-EWKkU .framer-ipwpkg,
       .framer-EWKkU .framer-1e969dw {
-        width: 100%
+        width: 633px
       }
     }
 
     @media (max-width:809.98px) {
       .framer-EWKkU.framer-1gm56si {
         width: 390px
+      }
+
+      .framer-EWKkU .framer-ivc27i {
+        width: 1278px;
+        height: 1572px
       }
 
       .framer-EWKkU .framer-18cv88e {
@@ -2547,13 +2391,17 @@ SolAI.">
 
       .framer-EWKkU .framer-bmvok9 {
         order: 1;
-        width: 100%;
-        padding: 28px
+        width: 26%;
+        height: 981px
+      }
+
+      .framer-EWKkU .framer-12zesfi {
+        width: 315px
       }
 
       .framer-EWKkU .framer-ipwpkg,
       .framer-EWKkU .framer-1e969dw {
-        width: 100%
+        width: 278px
       }
 
       .framer-EWKkU .framer-11tfplo {
@@ -3471,7 +3319,7 @@ SolAI.">
             </nav>
           </div>
         </div>
-        <div class="framer-1sa0re2-container" data-framer-appear-id="1sa0re2" style="opacity:1;transform:none">
+        <div class="framer-1sa0re2-container" data-framer-appear-id="1sa0re2" style="opacity:0.001;transform:none">
           <!--$-->
           <div style="border-radius:0px;overflow:hidden;position:relative;height:100%;width:100%"><canvas
               style="height:100%;width:100%"></canvas>
@@ -3495,391 +3343,137 @@ SolAI.">
           </div>
           <div class="framer-bmvok9" data-framer-name="Hero">
             <div class="framer-7el4zz">
-              <form class="framer-12zesfi" data-framer-appear-id="12zesfi" style="opacity:0.001;transform:none">
-                <div class="form-stepper-progress" aria-live="polite">
-                  <span class="form-stepper-progress-label">PROGRESO</span>
-                  <span data-step-indicator>PASO 1 DE 6</span>
-                </div>
-                <div class="form-step form-step-active" data-form-step aria-hidden="false">
-                  <label class="framer-uh6uw2">
-                    <div class="framer-1tja64s" style="transform:none" data-framer-component-type="RichTextContainer">
-                      <p
-                        style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
-                        class="framer-text">Nombre</p>
-                    </div>
-                    <div class="framer-form-text-input framer-form-input-wrapper framer-km2nhf"><input type="text"
-                        required name="Nombre" placeholder="Nombre" class="framer-form-input framer-form-input-empty">
-                    </div>
-                  </label>
-                  <label class="framer-1bc4otu">
-                    <div class="framer-zgx8ev" style="transform:none" data-framer-component-type="RichTextContainer">
-                      <p
-                        style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
-                        class="framer-text">Apellidos</p>
-                    </div>
-                    <div class="framer-form-text-input framer-form-input-wrapper framer-11t6jp7"><input type="text"
-                        required name="Apellidos" placeholder="Apellidos"
-                        class="framer-form-input framer-form-input-empty"></div>
-                  </label>
-                  <label class="framer-13eg80q">
-                    <div class="framer-11fz9jr" style="transform:none" data-framer-component-type="RichTextContainer">
-                      <p
-                        style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
-                        class="framer-text">Email</p>
-                    </div>
-                    <div class="framer-form-text-input framer-form-input-wrapper framer-ofdwwz"><input type="email"
-                        required name="Email" placeholder="ejemplo@ejemplo.com"
-                        class="framer-form-input framer-form-input-empty"></div>
-                  </label>
-                  <label class="framer-pu8ulx">
-                    <div class="framer-yd72rj" style="transform:none" data-framer-component-type="RichTextContainer">
-                      <p
-                        style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
-                        class="framer-text">Teléfono</p>
-                    </div>
-                    <div class="framer-form-text-input framer-form-input-wrapper framer-1j7g5cq"><input type="tel"
-                        required name="Teléfono" placeholder="+34" class="framer-form-input framer-form-input-empty">
-                    </div>
-                  </label>
-                  <div class="form-stepper-nav">
-                    <button type="button" class="form-stepper-button" data-step-next>Siguiente</button>
+              <form class="framer-12zesfi" data-framer-appear-id="12zesfi" style="opacity:0.001;transform:none"><label
+                  class="framer-uh6uw2">
+                  <div class="framer-1tja64s" style="transform:none" data-framer-component-type="RichTextContainer">
+                    <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
+                      class="framer-text">Nombre</p>
                   </div>
-                </div>
-                <div class="form-step" data-form-step aria-hidden="true">
-                  <label class="framer-19hlyao">
-                    <div class="framer-u4xhyx" style="transform:none" data-framer-component-type="RichTextContainer">
-                      <p
-                        style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
-                        class="framer-text">Web Empresa</p>
-                    </div>
-                    <div class="framer-form-text-input framer-form-input-wrapper framer-ksb58u"><input type="text"
-                        name="Web" placeholder="www.ejemplo.com" class="framer-form-input framer-form-input-empty">
-                    </div>
-                  </label>
-                  <div class="form-stepper-nav">
-                    <button type="button" class="form-stepper-button form-stepper-button-secondary"
-                      data-step-prev>Anterior</button>
-                    <button type="button" class="form-stepper-button" data-step-next>Siguiente</button>
+                  <div class="framer-form-text-input framer-form-input-wrapper framer-km2nhf"><input type="text"
+                      required name="Nombre" placeholder="Nombre" class="framer-form-input framer-form-input-empty">
                   </div>
-                </div>
-                <div class="form-step" data-form-step aria-hidden="true">
-                  <label class="framer-19eli5j">
-                    <div class="framer-1yvo5ym" style="transform:none" data-framer-component-type="RichTextContainer">
-                      <p
-                        style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
-                        class="framer-text">Nivel de tu Empresa</p>
-                    </div>
-                    <div class="framer-form-input-wrapper framer-form-select-wrapper framer-1gh8bd"><select name="Nivel"
-                        class="framer-form-input">
-                        <option value disabled selected>Selecciona una opción</option>
-                        <option value="nivel1">Nivel 1 - Empresa Emergente</option>
-                        <option value="nivel2">Nivel 2 - Empresa en Crecimiento</option>
-                        <option value="nivel3">Nivel 3 - Empresa en Expansión</option>
-                        <option value="nivel4">Nivel 4 - Empresas Grandes</option>
-                      </select></div>
-                  </label>
-                  <div class="form-stepper-nav">
-                    <button type="button" class="form-stepper-button form-stepper-button-secondary"
-                      data-step-prev>Anterior</button>
-                    <button type="button" class="form-stepper-button" data-step-next>Siguiente</button>
+                </label><label class="framer-1bc4otu">
+                  <div class="framer-zgx8ev" style="transform:none" data-framer-component-type="RichTextContainer">
+                    <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
+                      class="framer-text">Apellidos</p>
                   </div>
-                </div>
-                <div class="form-step" data-form-step aria-hidden="true">
-                  <label class="framer-ipwpkg">
-                    <div class="framer-8r2oi8" style="transform:none" data-framer-component-type="RichTextContainer">
-                      <p
-                        style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
-                        class="framer-text">Sector</p>
-                    </div>
-                    <div class="framer-form-input-wrapper framer-form-select-wrapper framer-117e0tw"><select
-                        name="Sector" class="framer-form-input">
-                        <option value disabled selected>Selecciona una opción</option>
-                        <option value="clinicadental">Clínica Dental</option>
-                        <option value="clinicaestetica">Estética</option>
-                        <option value="coach">Coach</option>
-                        <option value="mudanzas">Mudanzas</option>
-                        <option value="infoproductor">Infoproductor</option>
-                        <option value="otro">Otro (especifica en Comentarios)</option>
-                      </select></div>
-                  </label>
-                  <div class="form-stepper-nav">
-                    <button type="button" class="form-stepper-button form-stepper-button-secondary"
-                      data-step-prev>Anterior</button>
-                    <button type="button" class="form-stepper-button" data-step-next>Siguiente</button>
+                  <div class="framer-form-text-input framer-form-input-wrapper framer-11t6jp7"><input type="text"
+                      required name="Apellidos" placeholder="Apellidos"
+                      class="framer-form-input framer-form-input-empty"></div>
+                </label><label class="framer-13eg80q">
+                  <div class="framer-11fz9jr" style="transform:none" data-framer-component-type="RichTextContainer">
+                    <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
+                      class="framer-text">Email</p>
                   </div>
-                </div>
-                <div class="form-step" data-form-step aria-hidden="true">
-                  <label class="framer-1e969dw">
-                    <div class="framer-6bzxio" style="transform:none" data-framer-component-type="RichTextContainer">
-                      <p
-                        style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
-                        class="framer-text">Facturación Mensual Aprox.</p>
-                    </div>
-                    <div class="framer-form-input-wrapper framer-form-select-wrapper framer-19496e8"><select
-                        name="Facturacion" class="framer-form-input">
-                        <option value>Selecciona una opción</option>
-                        <option value="-5k" disabled selected>Menos de 5.000€</option>
-                        <option value="5-10k">Entre 5.000€ y 10.000€</option>
-                        <option value="10-20k">Entre 10.000€ y 20.000€</option>
-                        <option value="20-50k">Entre 20.000€ y 50.000€</option>
-                        <option value="50-100k">Entre 50.000€ y 100.000€</option>
-                        <option value="+100k">Más de 100.000€</option>
-                      </select></div>
-                  </label>
-                  <div class="form-stepper-nav">
-                    <button type="button" class="form-stepper-button form-stepper-button-secondary"
-                      data-step-prev>Anterior</button>
-                    <button type="button" class="form-stepper-button" data-step-next>Siguiente</button>
+                  <div class="framer-form-text-input framer-form-input-wrapper framer-ofdwwz"><input type="email"
+                      required name="Email" placeholder="ejemplo@ejemplo.com"
+                      class="framer-form-input framer-form-input-empty"></div>
+                </label><label class="framer-pu8ulx">
+                  <div class="framer-yd72rj" style="transform:none" data-framer-component-type="RichTextContainer">
+                    <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
+                      class="framer-text">Teléfono</p>
                   </div>
-                </div>
-                <div class="form-step" data-form-step aria-hidden="true">
-                  <label class="framer-fr09oo">
-                    <div class="framer-ncx5dj" style="transform:none" data-framer-component-type="RichTextContainer">
-                      <p
-                        style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
-                        class="framer-text">¿Algo más que quieras comentarnos?</p>
-                    </div>
-                    <div class="framer-form-text-input framer-form-input-wrapper framer-17hht9g"><textarea required
-                        name="comentario" placeholder="Escribe aquí..." class="framer-form-input"></textarea></div>
-                  </label>
-                  <div class="form-stepper-nav form-stepper-nav-final">
-                    <button type="button" class="form-stepper-button form-stepper-button-secondary"
-                      data-step-prev>Anterior</button>
-                    <button type="submit" class="form-stepper-button" data-step-submit>Enviar</button>
+                  <div class="framer-form-text-input framer-form-input-wrapper framer-1j7g5cq"><input type="tel"
+                      required name="Teléfono" placeholder="+34" class="framer-form-input framer-form-input-empty">
                   </div>
+                </label><label class="framer-19hlyao">
+                  <div class="framer-u4xhyx" style="transform:none" data-framer-component-type="RichTextContainer">
+                    <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
+                      class="framer-text">Web Empresa</p>
+                  </div>
+                  <div class="framer-form-text-input framer-form-input-wrapper framer-ksb58u"><input type="text"
+                      name="Web" placeholder="www.ejemplo.com" class="framer-form-input framer-form-input-empty"></div>
+                </label><label class="framer-19eli5j">
+                  <div class="framer-1yvo5ym" style="transform:none" data-framer-component-type="RichTextContainer">
+                    <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
+                      class="framer-text">Nivel de tu Empresa</p>
+                  </div>
+                  <div class="framer-form-input-wrapper framer-form-select-wrapper framer-1gh8bd"><select name="Nivel"
+                      class="framer-form-input">
+                      <option value disabled selected>Selecciona una opción</option>
+                      <option value="nivel1">Nivel 1 - Empresa Emergente</option>
+                      <option value="nivel2">Nivel 2 - Empresa en Crecimiento</option>
+                      <option value="nivel3">Nivel 3 - Empresa en Expansión</option>
+                      <option value="nivel4">Nivel 4 - Empresas Grandes</option>
+                    </select></div>
+                </label><label class="framer-ipwpkg">
+                  <div class="framer-8r2oi8" style="transform:none" data-framer-component-type="RichTextContainer">
+                    <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
+                      class="framer-text">Sector</p>
+                  </div>
+                  <div class="framer-form-input-wrapper framer-form-select-wrapper framer-117e0tw"><select name="Sector"
+                      class="framer-form-input">
+                      <option value disabled selected>Selecciona una opción</option>
+                      <option value="clinicadental">Clínica Dental</option>
+                      <option value="clinicaestetica">Estética</option>
+                      <option value="coach">Coach</option>
+                      <option value="mudanzas">Mudanzas</option>
+                      <option value="infoproductor">Infoproductor</option>
+                      <option value="otro">Otro (especifica en Comentarios)</option>
+                    </select></div>
+                </label><label class="framer-1e969dw">
+                  <div class="framer-6bzxio" style="transform:none" data-framer-component-type="RichTextContainer">
+                    <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
+                      class="framer-text">Facturación Mensual Aprox.</p>
+                  </div>
+                  <div class="framer-form-input-wrapper framer-form-select-wrapper framer-19496e8"><select
+                      name="Facturacion" class="framer-form-input">
+                      <option value>Selecciona una opción</option>
+                      <option value="-5k" disabled selected>Menos de 5.000€</option>
+                      <option value="5-10k">Entre 5.000€ y 10.000€</option>
+                      <option value="10-20k">Entre 10.000€ y 20.000€</option>
+                      <option value="20-50k">Entre 20.000€ y 50.000€</option>
+                      <option value="50-100k">Entre 50.000€ y 100.000€</option>
+                      <option value="+100k">Más de 100.000€</option>
+                    </select></div>
+                </label><label class="framer-fr09oo">
+                  <div class="framer-ncx5dj" style="transform:none" data-framer-component-type="RichTextContainer">
+                    <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:12px;--framer-font-weight:500;--framer-text-color:rgb(136, 136, 136)"
+                      class="framer-text">¿Algo más que quieras comentarnos?</p>
+                  </div>
+                  <div class="framer-form-text-input framer-form-input-wrapper framer-17hht9g"><textarea required
+                      name="comentario" placeholder="Escribe aquí..." class="framer-form-input"></textarea></div>
+                </label>
+                <div class="ssr-variant hidden-1rhgb77 hidden-1jivxlf">
+                  <div class="framer-1muy388-container"><button type="submit"
+                      class="framer-hKnyw framer-kwamgw framer-v-kwamgw" data-framer-name="Default" data-reset="button"
+                      style="background-color:rgb(51, 51, 51);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;height:100%;width:100%;opacity:1"
+                      tabindex="0">
+                      <div class="framer-fnbuf0"
+                        style="--extracted-r6o4lv:rgb(255, 255, 255);--framer-link-text-color:rgb(0, 153, 255);--framer-link-text-decoration:underline;transform:none"
+                        data-framer-component-type="RichTextContainer">
+                        <p style="--font-selector:SW50ZXItU2VtaUJvbGQ=;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:14px;--framer-font-weight:600;--framer-text-color:var(--extracted-r6o4lv, rgb(255, 255, 255))"
+                          class="framer-text">Enviar</p>
+                      </div>
+                    </button></div>
+                </div>
+                <div class="ssr-variant hidden-1gm56si hidden-1jivxlf">
+                  <div class="framer-1muy388-container"><button type="submit"
+                      class="framer-hKnyw framer-kwamgw framer-v-kwamgw" data-framer-name="Default" data-reset="button"
+                      style="background-color:rgb(51, 51, 51);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;height:100%;width:100%;opacity:1"
+                      tabindex="0">
+                      <div class="framer-fnbuf0"
+                        style="--extracted-r6o4lv:rgb(255, 255, 255);--framer-link-text-color:rgb(0, 153, 255);--framer-link-text-decoration:underline;transform:none"
+                        data-framer-component-type="RichTextContainer">
+                        <p style="--font-selector:SW50ZXItU2VtaUJvbGQ=;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:14px;--framer-font-weight:600;--framer-text-color:var(--extracted-r6o4lv, rgb(255, 255, 255))"
+                          class="framer-text">Enviar</p>
+                      </div>
+                    </button></div>
+                </div>
+                <div class="ssr-variant hidden-1gm56si hidden-1rhgb77">
+                  <div class="framer-1muy388-container"><button type="submit"
+                      class="framer-hKnyw framer-kwamgw framer-v-kwamgw" data-framer-name="Default" data-reset="button"
+                      style="background-color:rgb(51, 51, 51);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;height:100%;width:100%;opacity:1"
+                      tabindex="0">
+                      <div class="framer-fnbuf0"
+                        style="--extracted-r6o4lv:rgb(255, 255, 255);--framer-link-text-color:rgb(0, 153, 255);--framer-link-text-decoration:underline;transform:none"
+                        data-framer-component-type="RichTextContainer">
+                        <p style="--font-selector:SW50ZXItU2VtaUJvbGQ=;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:14px;--framer-font-weight:600;--framer-text-color:var(--extracted-r6o4lv, rgb(255, 255, 255))"
+                          class="framer-text">Enviar</p>
+                      </div>
+                    </button></div>
                 </div>
               </form>
-              <script>
-                (() => {
-                  const STYLE_ID = "solai-stepper-style";
-                  const BLUEPRINT = [
-                    ["Nombre", "Apellidos", "Email", "Teléfono"],
-                    ["Web Empresa"],
-                    ["Nivel de tu Empresa"],
-                    ["Sector"],
-                    ["Facturación Mensual Aprox."],
-                    ["¿Algo más que quieras comentarnos?"]
-                  ];
-
-                  const normalize = value => value.toString().normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-
-                  const ensureStyles = () => {
-                    if (document.getElementById(STYLE_ID)) return;
-                    const style = document.createElement("style");
-                    style.id = STYLE_ID;
-                    style.textContent = `
-body:not([data-stepper-ready]) .framer-12zesfi { opacity: 0; }
-body[data-stepper-ready] .framer-12zesfi { opacity: 1; pointer-events: auto; transition: opacity 0.25s ease; }
-.framer-12zesfi .form-step { display: none !important; flex-direction: column; gap: 18px; width: 100%; }
-.framer-12zesfi .form-step.form-step-active { display: flex !important; }
-                    `;
-                    document.head.appendChild(style);
-                  };
-
-                  const createNavButton = (type, text) => {
-                    const button = document.createElement("button");
-                    button.type = "button";
-                    button.className = type === "prev"
-                      ? "form-stepper-button form-stepper-button-secondary"
-                      : "form-stepper-button";
-                    button.setAttribute(type === "prev" ? "data-step-prev" : "data-step-next", "");
-                    button.textContent = text;
-                    return button;
-                  };
-
-                  const createSubmitButton = () => {
-                    const button = document.createElement("button");
-                    button.type = "submit";
-                    button.className = "form-stepper-button";
-                    button.setAttribute("data-step-submit", "");
-                    button.textContent = "Enviar";
-                    return button;
-                  };
-
-                  const ensureStructure = form => {
-                    if (form.dataset.stepperStructure === "true" && form.querySelector(".form-step")) return true;
-
-                    const labels = Array.from(form.querySelectorAll(":scope > label"));
-                    if (!labels.length) return false;
-                    const normalizedLabels = labels.map(label => normalize(label.textContent || ""));
-                    const matchesBlueprint = BLUEPRINT.every(keywords =>
-                      keywords.some(keyword => {
-                        const key = normalize(keyword);
-                        return normalizedLabels.some(text => text.includes(key));
-                      })
-                    );
-                    if (!matchesBlueprint) return false;
-
-                    form.querySelectorAll(":scope > .ssr-variant, :scope > .framer-1muy388-container").forEach(node => node.remove());
-
-                    const progress = document.createElement("div");
-                    progress.className = "form-stepper-progress";
-                    progress.setAttribute("aria-live", "polite");
-                    const labelSpan = document.createElement("span");
-                    labelSpan.className = "form-stepper-progress-label";
-                    labelSpan.textContent = "PROGRESO";
-                    const indicatorSpan = document.createElement("span");
-                    indicatorSpan.setAttribute("data-step-indicator", "");
-                    indicatorSpan.textContent = `PASO 1 DE ${BLUEPRINT.length}`;
-                    progress.append(labelSpan, indicatorSpan);
-
-                    const fragment = document.createDocumentFragment();
-                    fragment.append(progress);
-
-                    const used = new Set();
-                    const findLabel = keyword => {
-                      const key = normalize(keyword);
-                      for (const label of labels) {
-                        if (used.has(label)) continue;
-                        const text = normalize(label.textContent || "");
-                        if (text.includes(key)) {
-                          used.add(label);
-                          return label;
-                        }
-                      }
-                      return null;
-                    };
-
-                    const steps = [];
-                    BLUEPRINT.forEach(keywords => {
-                      const step = document.createElement("div");
-                      step.className = "form-step";
-                      step.setAttribute("data-form-step", "");
-                      step.setAttribute("aria-hidden", "true");
-                      keywords.forEach(keyword => {
-                        const label = findLabel(keyword);
-                        if (label) step.appendChild(label);
-                      });
-                      fragment.append(step);
-                      steps.push(step);
-                    });
-
-                    const leftoverLabels = labels.filter(label => !used.has(label));
-                    if (leftoverLabels.length) {
-                      const fallback = steps[steps.length - 1] ?? steps[0];
-                      leftoverLabels.forEach(label => fallback.appendChild(label));
-                    }
-
-                    steps.forEach((step, index) => {
-                      const nav = document.createElement("div");
-                      nav.className = "form-stepper-nav";
-                      if (index > 0) nav.append(createNavButton("prev", "Anterior"));
-                      if (index < steps.length - 1) {
-                        nav.append(createNavButton("next", "Siguiente"));
-                      } else {
-                        nav.classList.add("form-stepper-nav-final");
-                        nav.append(createSubmitButton());
-                      }
-                      step.append(nav);
-                    });
-
-                    form.innerHTML = "";
-                    form.append(fragment);
-                    form.dataset.stepperStructure = "true";
-                    return true;
-                  };
-
-                  const getState = form => {
-                    if (!form.__stepperState) form.__stepperState = { current: 0 };
-                    return form.__stepperState;
-                  };
-
-                  const updateState = form => {
-                    const state = getState(form);
-                    const { steps, indicator, total } = state;
-                    steps.forEach((step, index) => {
-                      const active = index === state.current;
-                      step.classList.toggle("form-step-active", active);
-                      step.setAttribute("aria-hidden", active ? "false" : "true");
-                    });
-                    if (indicator) indicator.textContent = `PASO ${state.current + 1} DE ${total}`;
-                    form.dataset.stepperCurrent = String(state.current);
-                    document.body && document.body.setAttribute("data-stepper-ready", "true");
-                  };
-
-                  const validateState = form => {
-                    const state = getState(form);
-                    const activeStep = state.steps[state.current];
-                    if (!activeStep) return true;
-                    for (const field of activeStep.querySelectorAll("input, select, textarea")) {
-                      if (!field.checkValidity()) {
-                        field.reportValidity();
-                        if (typeof field.focus === "function") field.focus();
-                        return false;
-                      }
-                    }
-                    return true;
-                  };
-
-                  const bindForm = form => {
-                    ensureStyles();
-                    if (!ensureStructure(form)) return;
-
-                    const state = getState(form);
-                    state.steps = Array.from(form.querySelectorAll(".form-step"));
-                    state.total = state.steps.length;
-                    state.indicator = form.querySelector("[data-step-indicator]");
-                    const stored = Number.parseInt(form.dataset.stepperCurrent ?? "0", 10);
-                    state.current = Number.isFinite(stored) ? Math.min(Math.max(stored, 0), state.total - 1) : 0;
-
-                    if (!state.bound) {
-                      form.addEventListener("click", event => {
-                        const next = event.target.closest("[data-step-next]");
-                        const prev = event.target.closest("[data-step-prev]");
-                        if (next) {
-                          event.preventDefault();
-                          if (!validateState(form)) return;
-                          if (state.current < state.total - 1) {
-                            state.current += 1;
-                            updateState(form);
-                          }
-                          return;
-                        }
-                        if (prev) {
-                          event.preventDefault();
-                          if (state.current > 0) {
-                            state.current -= 1;
-                            updateState(form);
-                          }
-                        }
-                      });
-
-                      form.addEventListener("keydown", event => {
-                        if (event.key !== "Enter") return;
-                        if (state.current >= state.total - 1) return;
-                        const activeStep = state.steps[state.current];
-                        if (!activeStep.contains(event.target)) return;
-                        event.preventDefault();
-                        if (!validateState(form)) return;
-                        state.current += 1;
-                        updateState(form);
-                      });
-
-                      state.bound = true;
-                    }
-
-                    document.body && document.body.removeAttribute("data-stepper-ready");
-                    updateState(form);
-                  };
-
-                  const run = () => {
-                    document.querySelectorAll(".framer-12zesfi").forEach(bindForm);
-                  };
-
-                  if (typeof window.__solaiStepperInit !== "function") {
-                    window.__solaiStepperInit = run;
-                    new MutationObserver(run).observe(document.documentElement, { childList: true, subtree: true });
-                    window.addEventListener("pageshow", run);
-                    if (document.readyState === "loading") {
-                      document.addEventListener("DOMContentLoaded", run);
-                    } else {
-                      run();
-                    }
-                  } else {
-                    window.__solaiStepperInit();
-                  }
-                })();
-              </script>
             </div>
           </div>
           <div class="framer-11tfplo" data-framer-name="Hero">
