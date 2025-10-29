@@ -2095,9 +2095,9 @@ SolAI.">
 
     .framer-EWKkU .framer-bmvok9 {
       will-change: var(--framer-will-change-override, transform);
-      background-color: rgba(15, 21, 32, 0.94);
+      background-color: rgba(8, 12, 20, 0.7);
       border-radius: 24px;
-      border: 1px solid rgba(216, 231, 242, 0.14);
+      border: 1px solid rgba(216, 231, 242, 0.12);
       flex-flow: column;
       flex: none;
       place-content: center;
@@ -2109,7 +2109,7 @@ SolAI.">
       display: flex;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 24px 72px -42px rgba(9, 31, 64, 0.7), inset 0 2px 1px rgba(207, 231, 255, 0.18)
+      box-shadow: 0 28px 68px -46px rgba(9, 24, 54, 0.65), inset 0 2px 1px rgba(207, 231, 255, 0.15)
     }
 
     .framer-EWKkU .framer-7el4zz {
@@ -3606,32 +3606,157 @@ SolAI.">
               </form>
               <script>
                 (() => {
-                  const form = document.querySelector(".framer-12zesfi");
-                  if (!form) return;
+                  const STYLE_ID = "solai-stepper-style";
+                  const BLUEPRINT = [
+                    ["Nombre", "Apellidos", "Email", "Teléfono"],
+                    ["Web Empresa"],
+                    ["Nivel de tu Empresa"],
+                    ["Sector"],
+                    ["Facturación Mensual Aprox."],
+                    ["¿Algo más que quieras comentarnos?"]
+                  ];
 
-                  const steps = Array.from(form.querySelectorAll(".form-step"));
-                  if (!steps.length) return;
+                  const normalize = value => value.toString().normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
-                  const indicator = form.querySelector("[data-step-indicator]");
-                  const totalSteps = steps.length;
-                  let current = steps.findIndex(step => step.classList.contains("form-step-active"));
-                  if (current < 0) current = 0;
+                  const ensureStyles = () => {
+                    if (document.getElementById(STYLE_ID)) return;
+                    const style = document.createElement("style");
+                    style.id = STYLE_ID;
+                    style.textContent = `
+body:not([data-stepper-ready]) .framer-12zesfi { opacity: 0; pointer-events: none; }
+body[data-stepper-ready] .framer-12zesfi { opacity: 1; pointer-events: auto; transition: opacity 0.25s ease; }
+.framer-12zesfi .form-step { display: none !important; flex-direction: column; gap: 18px; width: 100%; }
+.framer-12zesfi .form-step.form-step-active { display: flex !important; }
+                    `;
+                    document.head.appendChild(style);
+                  };
 
-                  const update = () => {
+                  const createNavButton = (type, text) => {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.className = type === "prev"
+                      ? "form-stepper-button form-stepper-button-secondary"
+                      : "form-stepper-button";
+                    button.setAttribute(type === "prev" ? "data-step-prev" : "data-step-next", "");
+                    button.textContent = text;
+                    return button;
+                  };
+
+                  const createSubmitButton = () => {
+                    const button = document.createElement("button");
+                    button.type = "submit";
+                    button.className = "form-stepper-button";
+                    button.setAttribute("data-step-submit", "");
+                    button.textContent = "Enviar";
+                    return button;
+                  };
+
+                  const ensureStructure = form => {
+                    if (form.dataset.stepperStructure === "true" && form.querySelector(".form-step")) return true;
+
+                    const labels = Array.from(form.querySelectorAll(":scope > label"));
+                    if (!labels.length) return false;
+                    const normalizedLabels = labels.map(label => normalize(label.textContent || ""));
+                    const matchesBlueprint = BLUEPRINT.every(keywords =>
+                      keywords.some(keyword => {
+                        const key = normalize(keyword);
+                        return normalizedLabels.some(text => text.includes(key));
+                      })
+                    );
+                    if (!matchesBlueprint) return false;
+
+                    form.querySelectorAll(":scope > .ssr-variant, :scope > .framer-1muy388-container").forEach(node => node.remove());
+
+                    const progress = document.createElement("div");
+                    progress.className = "form-stepper-progress";
+                    progress.setAttribute("aria-live", "polite");
+                    const labelSpan = document.createElement("span");
+                    labelSpan.className = "form-stepper-progress-label";
+                    labelSpan.textContent = "PROGRESO";
+                    const indicatorSpan = document.createElement("span");
+                    indicatorSpan.setAttribute("data-step-indicator", "");
+                    indicatorSpan.textContent = `PASO 1 DE ${BLUEPRINT.length}`;
+                    progress.append(labelSpan, indicatorSpan);
+
+                    const fragment = document.createDocumentFragment();
+                    fragment.append(progress);
+
+                    const used = new Set();
+                    const findLabel = keyword => {
+                      const key = normalize(keyword);
+                      for (const label of labels) {
+                        if (used.has(label)) continue;
+                        const text = normalize(label.textContent || "");
+                        if (text.includes(key)) {
+                          used.add(label);
+                          return label;
+                        }
+                      }
+                      return null;
+                    };
+
+                    const steps = [];
+                    BLUEPRINT.forEach(keywords => {
+                      const step = document.createElement("div");
+                      step.className = "form-step";
+                      step.setAttribute("data-form-step", "");
+                      step.setAttribute("aria-hidden", "true");
+                      keywords.forEach(keyword => {
+                        const label = findLabel(keyword);
+                        if (label) step.appendChild(label);
+                      });
+                      fragment.append(step);
+                      steps.push(step);
+                    });
+
+                    const leftoverLabels = labels.filter(label => !used.has(label));
+                    if (leftoverLabels.length) {
+                      const fallback = steps[steps.length - 1] ?? steps[0];
+                      leftoverLabels.forEach(label => fallback.appendChild(label));
+                    }
+
                     steps.forEach((step, index) => {
-                      const active = index === current;
+                      const nav = document.createElement("div");
+                      nav.className = "form-stepper-nav";
+                      if (index > 0) nav.append(createNavButton("prev", "Anterior"));
+                      if (index < steps.length - 1) {
+                        nav.append(createNavButton("next", "Siguiente"));
+                      } else {
+                        nav.classList.add("form-stepper-nav-final");
+                        nav.append(createSubmitButton());
+                      }
+                      step.append(nav);
+                    });
+
+                    form.innerHTML = "";
+                    form.append(fragment);
+                    form.dataset.stepperStructure = "true";
+                    return true;
+                  };
+
+                  const getState = form => {
+                    if (!form.__stepperState) form.__stepperState = { current: 0 };
+                    return form.__stepperState;
+                  };
+
+                  const updateState = form => {
+                    const state = getState(form);
+                    const { steps, indicator, total } = state;
+                    steps.forEach((step, index) => {
+                      const active = index === state.current;
                       step.classList.toggle("form-step-active", active);
                       step.setAttribute("aria-hidden", active ? "false" : "true");
                     });
-                    if (indicator) indicator.textContent = `PASO ${current + 1} DE ${totalSteps}`;
+                    if (indicator) indicator.textContent = `PASO ${state.current + 1} DE ${total}`;
+                    form.dataset.stepperCurrent = String(state.current);
                     document.body && document.body.setAttribute("data-stepper-ready", "true");
                   };
 
-                  const fieldsOf = step => Array.from(step.querySelectorAll("input, select, textarea"));
-
-                  const validateStep = () => {
-                    const activeStep = steps[current];
-                    for (const field of fieldsOf(activeStep)) {
+                  const validateState = form => {
+                    const state = getState(form);
+                    const activeStep = state.steps[state.current];
+                    if (!activeStep) return true;
+                    for (const field of activeStep.querySelectorAll("input, select, textarea")) {
                       if (!field.checkValidity()) {
                         field.reportValidity();
                         if (typeof field.focus === "function") field.focus();
@@ -3641,46 +3766,73 @@ SolAI.">
                     return true;
                   };
 
-                  if (form.dataset.stepperBound === "true") {
-                    document.body && document.body.setAttribute("data-stepper-ready", "true");
-                    return;
+                  const bindForm = form => {
+                    ensureStyles();
+                    if (!ensureStructure(form)) return;
+
+                    const state = getState(form);
+                    state.steps = Array.from(form.querySelectorAll(".form-step"));
+                    state.total = state.steps.length;
+                    state.indicator = form.querySelector("[data-step-indicator]");
+                    const stored = Number.parseInt(form.dataset.stepperCurrent ?? "0", 10);
+                    state.current = Number.isFinite(stored) ? Math.min(Math.max(stored, 0), state.total - 1) : 0;
+
+                    if (!state.bound) {
+                      form.addEventListener("click", event => {
+                        const next = event.target.closest("[data-step-next]");
+                        const prev = event.target.closest("[data-step-prev]");
+                        if (next) {
+                          event.preventDefault();
+                          if (!validateState(form)) return;
+                          if (state.current < state.total - 1) {
+                            state.current += 1;
+                            updateState(form);
+                          }
+                          return;
+                        }
+                        if (prev) {
+                          event.preventDefault();
+                          if (state.current > 0) {
+                            state.current -= 1;
+                            updateState(form);
+                          }
+                        }
+                      });
+
+                      form.addEventListener("keydown", event => {
+                        if (event.key !== "Enter") return;
+                        if (state.current >= state.total - 1) return;
+                        const activeStep = state.steps[state.current];
+                        if (!activeStep.contains(event.target)) return;
+                        event.preventDefault();
+                        if (!validateState(form)) return;
+                        state.current += 1;
+                        updateState(form);
+                      });
+
+                      state.bound = true;
+                    }
+
+                    document.body && document.body.removeAttribute("data-stepper-ready");
+                    updateState(form);
+                  };
+
+                  const run = () => {
+                    document.querySelectorAll(".framer-12zesfi").forEach(bindForm);
+                  };
+
+                  if (typeof window.__solaiStepperInit !== "function") {
+                    window.__solaiStepperInit = run;
+                    new MutationObserver(run).observe(document.documentElement, { childList: true, subtree: true });
+                    window.addEventListener("pageshow", run);
+                    if (document.readyState === "loading") {
+                      document.addEventListener("DOMContentLoaded", run);
+                    } else {
+                      run();
+                    }
+                  } else {
+                    window.__solaiStepperInit();
                   }
-
-                  form.addEventListener("click", event => {
-                    const next = event.target.closest("[data-step-next]");
-                    const prev = event.target.closest("[data-step-prev]");
-                    if (next) {
-                      event.preventDefault();
-                      if (!validateStep()) return;
-                      if (current < totalSteps - 1) {
-                        current += 1;
-                        update();
-                      }
-                      return;
-                    }
-                    if (prev) {
-                      event.preventDefault();
-                      if (current > 0) {
-                        current -= 1;
-                        update();
-                      }
-                    }
-                  });
-
-                  form.addEventListener("keydown", event => {
-                    if (event.key !== "Enter") return;
-                    if (current >= totalSteps - 1) return;
-                    const activeStep = steps[current];
-                    if (!activeStep.contains(event.target)) return;
-                    event.preventDefault();
-                    if (!validateStep()) return;
-                    current += 1;
-                    update();
-                  });
-
-                  form.dataset.stepperBound = "true";
-                  document.body && document.body.removeAttribute("data-stepper-ready");
-                  update();
                 })();
               </script>
             </div>

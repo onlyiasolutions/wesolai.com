@@ -6,28 +6,236 @@
   <meta charset="utf-8">
 
 
-  <script>try { if (localStorage.get("__framer_force_showing_editorbar_since")) { const n = document.createElement("link"); n.rel = "modulepreload"; n.href = "https://framer.com/edit/init.mjs"; document.head.appendChild(n) } } catch (e) { }</script>
-  <!-- Start of headStart -->
-
-  <!-- Anti-stale caching + Framer bundle bust + SW unregister -->
-  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <script>
-    (function(){
-      // 1) Unregister any Service Workers that might be caching old HTML/assets
-      if ("serviceWorker" in navigator) {
-        try { navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister())); } catch(e) {}
+    (() => {
+      const STYLE_ID = "solai-stepper-style";
+      const BLUEPRINT = [
+        ["Nombre", "Apellidos", "Email", "Teléfono"],
+        ["Web Empresa"],
+        ["Nivel de tu Empresa"],
+        ["Sector"],
+        ["Facturación Mensual Aprox."],
+        ["¿Algo más que quieras comentarnos?"]
+      ];
+
+      const normalize = value => value.toString().normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+      const ensureStyles = () => {
+        if (document.getElementById(STYLE_ID)) return;
+        const style = document.createElement("style");
+        style.id = STYLE_ID;
+        style.textContent = `
+body:not([data-stepper-ready]) .framer-12zesfi { opacity: 0; pointer-events: none; }
+body[data-stepper-ready] .framer-12zesfi { opacity: 1; pointer-events: auto; transition: opacity 0.25s ease; }
+.framer-12zesfi .form-step { display: none !important; flex-direction: column; gap: 18px; width: 100%; }
+.framer-12zesfi .form-step.form-step-active { display: flex !important; }
+        `;
+        document.head.appendChild(style);
+      };
+
+      const createNavButton = (type, text) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = type === "prev"
+          ? "form-stepper-button form-stepper-button-secondary"
+          : "form-stepper-button";
+        button.setAttribute(type === "prev" ? "data-step-prev" : "data-step-next", "");
+        button.textContent = text;
+        return button;
+      };
+
+      const createSubmitButton = () => {
+        const button = document.createElement("button");
+        button.type = "submit";
+        button.className = "form-stepper-button";
+        button.setAttribute("data-step-submit", "");
+        button.textContent = "Enviar";
+        return button;
+      };
+
+      const ensureStructure = form => {
+        if (form.dataset.stepperStructure === "true" && form.querySelector(".form-step")) return true;
+
+        const labels = Array.from(form.querySelectorAll(":scope > label"));
+        if (!labels.length) return false;
+        const normalizedLabels = labels.map(label => normalize(label.textContent || ""));
+        const matchesBlueprint = BLUEPRINT.every(keywords =>
+          keywords.some(keyword => {
+            const key = normalize(keyword);
+            return normalizedLabels.some(text => text.includes(key));
+          })
+        );
+        if (!matchesBlueprint) return false;
+
+        // Remove original submit containers so we can insert our own button.
+        form.querySelectorAll(":scope > .ssr-variant, :scope > .framer-1muy388-container").forEach(node => node.remove());
+
+        const progress = document.createElement("div");
+        progress.className = "form-stepper-progress";
+        progress.setAttribute("aria-live", "polite");
+        const labelSpan = document.createElement("span");
+        labelSpan.className = "form-stepper-progress-label";
+        labelSpan.textContent = "PROGRESO";
+        const indicatorSpan = document.createElement("span");
+        indicatorSpan.setAttribute("data-step-indicator", "");
+        indicatorSpan.textContent = `PASO 1 DE ${BLUEPRINT.length}`;
+        progress.append(labelSpan, indicatorSpan);
+
+        const fragment = document.createDocumentFragment();
+        fragment.append(progress);
+
+        const used = new Set();
+        const findLabel = keyword => {
+          const key = normalize(keyword);
+          for (const label of labels) {
+            if (used.has(label)) continue;
+            const text = normalize(label.textContent || "");
+            if (text.includes(key)) {
+              used.add(label);
+              return label;
+            }
+          }
+          return null;
+        };
+
+        const steps = [];
+        BLUEPRINT.forEach(keywords => {
+          const step = document.createElement("div");
+          step.className = "form-step";
+          step.setAttribute("data-form-step", "");
+          step.setAttribute("aria-hidden", "true");
+          keywords.forEach(keyword => {
+            const label = findLabel(keyword);
+            if (label) step.appendChild(label);
+          });
+          fragment.append(step);
+          steps.push(step);
+        });
+
+        const leftoverLabels = labels.filter(label => !used.has(label));
+        if (leftoverLabels.length) {
+          const fallback = steps[steps.length - 1] ?? steps[0];
+          leftoverLabels.forEach(label => fallback.appendChild(label));
+        }
+
+        steps.forEach((step, index) => {
+          const nav = document.createElement("div");
+          nav.className = "form-stepper-nav";
+          if (index > 0) nav.append(createNavButton("prev", "Anterior"));
+          if (index < steps.length - 1) {
+            nav.append(createNavButton("next", "Siguiente"));
+          } else {
+            nav.classList.add("form-stepper-nav-final");
+            nav.append(createSubmitButton());
+          }
+          step.append(nav);
+        });
+
+        form.innerHTML = "";
+        form.append(fragment);
+        form.dataset.stepperStructure = "true";
+        return true;
+      };
+
+      const getState = form => {
+        if (!form.__stepperState) form.__stepperState = { current: 0 };
+        return form.__stepperState;
+      };
+
+      const updateState = form => {
+        const state = getState(form);
+        const { steps, indicator, total } = state;
+        steps.forEach((step, index) => {
+          const active = index === state.current;
+          step.classList.toggle("form-step-active", active);
+          step.setAttribute("aria-hidden", active ? "false" : "true");
+        });
+        if (indicator) indicator.textContent = `PASO ${state.current + 1} DE ${total}`;
+        form.dataset.stepperCurrent = String(state.current);
+        document.body && document.body.setAttribute("data-stepper-ready", "true");
+      };
+
+      const validateState = form => {
+        const state = getState(form);
+        const activeStep = state.steps[state.current];
+        if (!activeStep) return true;
+        for (const field of activeStep.querySelectorAll("input, select, textarea")) {
+          if (!field.checkValidity()) {
+            field.reportValidity();
+            if (typeof field.focus === "function") field.focus();
+            return false;
+          }
+        }
+        return true;
+      };
+
+      const bindForm = form => {
+        ensureStyles();
+        if (!ensureStructure(form)) return;
+
+        const state = getState(form);
+        state.steps = Array.from(form.querySelectorAll(".form-step"));
+        state.total = state.steps.length;
+        state.indicator = form.querySelector("[data-step-indicator]");
+        const stored = Number.parseInt(form.dataset.stepperCurrent ?? "0", 10);
+        state.current = Number.isFinite(stored) ? Math.min(Math.max(stored, 0), state.total - 1) : 0;
+
+        if (!state.bound) {
+          form.addEventListener("click", event => {
+            const next = event.target.closest("[data-step-next]");
+            const prev = event.target.closest("[data-step-prev]");
+            if (next) {
+              event.preventDefault();
+              if (!validateState(form)) return;
+              if (state.current < state.total - 1) {
+                state.current += 1;
+                updateState(form);
+              }
+              return;
+            }
+            if (prev) {
+              event.preventDefault();
+              if (state.current > 0) {
+                state.current -= 1;
+                updateState(form);
+              }
+            }
+          });
+
+          form.addEventListener("keydown", event => {
+            if (event.key !== "Enter") return;
+            if (state.current >= state.total - 1) return;
+            const activeStep = state.steps[state.current];
+            if (!activeStep.contains(event.target)) return;
+            event.preventDefault();
+            if (!validateState(form)) return;
+            state.current += 1;
+            updateState(form);
+          });
+
+          state.bound = true;
+        }
+
+        document.body && document.body.removeAttribute("data-stepper-ready");
+        updateState(form);
+      };
+
+      const run = () => {
+        document.querySelectorAll(".framer-12zesfi").forEach(bindForm);
+      };
+
+      if (typeof window.__solaiStepperInit !== "function") {
+        window.__solaiStepperInit = run;
+        new MutationObserver(run).observe(document.documentElement, { childList: true, subtree: true });
+        window.addEventListener("pageshow", run);
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", run);
+        } else {
+          run();
+        }
+      } else {
+        window.__solaiStepperInit();
       }
-      // 2) Add a cache-busting version to Framer assets so first load already uses latest
-      const VERSION = "v2025-10-29-1"; // bump when you deploy
-      function bust(u){ return u + (u.includes("?") ? "&" : "?") + "v=" + VERSION; }
-      function bumpAttr(el, attr){ const u = el.getAttribute(attr); if(!u) return; if(/framerusercontent\.com|framer\.com/.test(u)) el.setAttribute(attr, bust(u)); }
-      document.addEventListener("DOMContentLoaded", function(){
-        // script/link tags already in DOM
-        document.querySelectorAll('script[src]').forEach(s=>bumpAttr(s,'src'));
-        document.querySelectorAll('link[rel="modulepreload"], link[rel="preload"], link[rel="stylesheet"]').forEach(l=>bumpAttr(l,'href'));
-      });
     })();
   </script>
   <!-- End of headStart -->
