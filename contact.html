@@ -4599,79 +4599,136 @@
   <!-- End of bodyEnd -->
    <script>
   (function () {
+    // Valores correctos
     const EMAIL = "hola@wesolai.com";
     const IG_URL = "https://instagram.com/wesolailabs";
 
-    function fixMailto(a) {
-      if (!a) return;
-      a.setAttribute("href", "mailto:" + EMAIL);
+    // Patrones a limpiar que puede inyectar el bundle de Framer en móviles/tablet
+    const BAD_EMAILS = [/hola@onlyiasolutions\.com/i, /landio@support\.com/i];
+    const BAD_HOSTS  = [/instagram\.com\/onlyiasolutions/i, /onlyiasolutions\.com/i];
+
+    // Reemplaza en atributos string (href, data-*, title, aria-*)
+    function replaceInAttributes(el) {
+      for (const attr of el.getAttributeNames()) {
+        const val = el.getAttribute(attr);
+        if (typeof val !== "string") continue;
+
+        let newVal = val
+          .replace(/mailto:\s*hola@onlyiasolutions\.com/gi, "mailto:" + EMAIL)
+          .replace(/mailto:\s*landio@support\.com/gi, "mailto:" + EMAIL)
+          .replace(/instagram\.com\/onlyiasolutions/gi, "instagram.com/wesolailabs")
+          .replace(/onlyiasolutions\.com/gi, "wesolai.com");
+
+        // Forzar destinos correctos en href
+        if (attr === "href") {
+          if (/^mailto:/i.test(newVal)) {
+            newVal = "mailto:" + EMAIL;
+          } else if (/instagram\.com/i.test(newVal)) {
+            newVal = IG_URL;
+          }
+        }
+
+        if (newVal !== val) el.setAttribute(attr, newVal);
+      }
+    }
+
+    // Arregla un <a>
+    function fixAnchor(a) {
+      if (!(a instanceof HTMLAnchorElement)) return;
+
+      const href = a.getAttribute("href") || "";
+      if (href.startsWith("mailto:")) {
+        a.setAttribute("href", "mailto:" + EMAIL);
+        a.removeAttribute("target");
+        a.removeAttribute("rel");
+      } else if (/instagram\.com/i.test(href)) {
+        a.setAttribute("href", IG_URL);
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener");
+      }
+
+      // Si el texto parece email, normalízalo
       const txt = (a.textContent || "").trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(txt) || txt.toLowerCase() !== EMAIL.toLowerCase()) {
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(txt) && txt.toLowerCase() !== EMAIL.toLowerCase()) {
         a.textContent = EMAIL;
       }
-      a.removeAttribute("target");
-      a.removeAttribute("rel");
+
+      // Limpia atributos residuales
+      replaceInAttributes(a);
     }
 
-    function fixIG(a) {
-      if (!a) return;
-      a.setAttribute("href", IG_URL);
-      a.setAttribute("target", "_blank");
-      a.setAttribute("rel", "noopener");
-    }
-
+    // Pasa por todo el DOM: anchors + elementos con atributos string
     function patchOnce(root = document) {
-      // 1) Arreglar todos los mailto y el texto visible
-      root.querySelectorAll('a[href^="mailto:"], a[href*="@"]').forEach(fixMailto);
+      root.querySelectorAll("a").forEach(fixAnchor);
 
-      // 2) Corregir emails en texto plano renderizados sin <a>
-      const tw = document.createTreeWalker(root.body || root, NodeFilter.SHOW_TEXT);
-      let n;
-      while ((n = tw.nextNode())) {
-        if (!n.nodeValue) continue;
-        n.nodeValue = n.nodeValue
-          .replace(/landio@support\.com/gi, EMAIL)
-          .replace(/hola@onlyiasolutions\.com/gi, EMAIL)
-          .replace(/onlyiasolutions\.com/gi, "wesolai.com");
+      root.querySelectorAll("*").forEach(replaceInAttributes);
+
+      // Text nodes sueltos (emails sin <a>)
+      const walker = document.createTreeWalker(root.body || root, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {
+        let t = node.nodeValue;
+        if (!t) continue;
+        BAD_EMAILS.forEach(re => (t = t.replace(re, EMAIL)));
+        BAD_HOSTS.forEach(re => (t = t.replace(re, m => m.replace(/onlyiasolutions\.com/i, "wesolai.com"))));
+        node.nodeValue = t;
       }
-
-      // 3) Arreglar enlaces de Instagram
-      root.querySelectorAll('a[href*="instagram.com"]').forEach(fixIG);
     }
 
-    // Interceptar clicks ANTES de navegar y corregir en caliente
+    // Intercepta interacción y corrige ANTES de navegar
     function getAnchorFromEvent(e) {
       let el = e.target;
       while (el && el !== document && !(el instanceof HTMLAnchorElement)) el = el.parentNode;
       return el instanceof HTMLAnchorElement ? el : null;
     }
 
-    document.addEventListener('click', function (e) {
+    function intercept(e) {
       const a = getAnchorFromEvent(e);
       if (!a) return;
-      const href = a.getAttribute('href') || '';
-      if (href.startsWith('mailto:')) {
-        e.preventDefault();
-        fixMailto(a);
-        window.location.href = 'mailto:' + EMAIL;
-      } else if (href.includes('instagram.com')) {
-        e.preventDefault();
-        fixIG(a);
-        window.open(IG_URL, '_blank', 'noopener');
-      }
-    }, true); // captura
+      const href = (a.getAttribute("href") || "").trim();
 
-    // Ejecutar pronto y repetir para ganar a la rehidratación
-    document.addEventListener('DOMContentLoaded', () => patchOnce());
-    window.addEventListener('load', () => {
+      if (href.startsWith("mailto:")) {
+        e.preventDefault();
+        a.setAttribute("href", "mailto:" + EMAIL);
+        a.textContent = EMAIL;
+        window.location.href = "mailto:" + EMAIL;
+      } else if (/instagram\.com/i.test(href)) {
+        e.preventDefault();
+        a.setAttribute("href", IG_URL);
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener");
+        window.open(IG_URL, "_blank", "noopener");
+      }
+    }
+
+    // Ejecutar pronto
+    document.addEventListener("DOMContentLoaded", patchOnce);
+
+    // Repetir unos segundos para ganar a la rehidratación
+    window.addEventListener("load", function () {
       let i = 0;
-      const iv = setInterval(() => { patchOnce(); if (++i > 20) clearInterval(iv); }, 500);
+      const iv = setInterval(function () {
+        patchOnce();
+        if (++i > 40) clearInterval(iv); // ~20s
+      }, 500);
     });
 
-    // Vigilar mutaciones del DOM (cuando Framer reinyecta nodos)
-    new MutationObserver(() => patchOnce()).observe(document.documentElement, { childList: true, subtree: true });
+    // Observar mutaciones (cuando Framer reinyecta nodos por breakpoints)
+    new MutationObserver(function (mutations) {
+      for (const m of mutations) {
+        if (m.addedNodes && m.addedNodes.length) {
+          patchOnce();
+          break;
+        }
+      }
+    }).observe(document.documentElement, { childList: true, subtree: true });
+
+    // Interceptores en captura para click/toque
+    document.addEventListener("click", intercept, true);
+    document.addEventListener("pointerdown", intercept, true);
+    document.addEventListener("touchstart", intercept, true);
   })();
-</script>
+</script> 
 </body>
 
 </html>
