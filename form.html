@@ -3987,6 +3987,114 @@ SolAI.">
       style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <!-- End of bodyEnd -->
+   <!-- SOLAI STEPPER v2 (no cambia el diseño, solo oculta/muestra) -->
+<script>
+(function () {
+  function onReady(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
+  onReady(function () {
+    const form = document.querySelector('form');
+    if (!form) return;
+
+    // === Utilidades ==========================================================
+    const WRAPPER_SEL = '[data-framer-component-type], .framer-lib-form-plain-text-input, .framer-lib-form-select, .framer-hKnyw, .framer-iVOgv, .framer-ojcNP, .framer-UoxRz, .framer-nkkEe';
+    const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/\\s+/g,' ').trim();
+    const wrapperFor = el => {
+      let n = el;
+      while (n && n.parentElement && n.parentElement !== form) {
+        const p = n.parentElement;
+        if (p.matches(WRAPPER_SEL)) return p;
+        n = p;
+      }
+      return n || el;
+    };
+    const byLabel = (txt) => {
+      const target = norm(txt);
+      const labels = Array.from(form.querySelectorAll('label'));
+      const lbl = labels.find(l => norm(l.textContent).startsWith(target));
+      return lbl ? wrapperFor(lbl) : null;
+    };
+    const show = (el, v) => { if (el) el.style.display = v ? '' : 'none'; };
+
+    // === Definición de pasos (mismas preguntas, solo dividir) ================
+    const stepsDef = [
+      ['Nombre','Apellidos','Email','Teléfono'],
+      ['Web Empresa'],
+      ['Nivel de tu Empresa','Sector'],
+      ['Facturación Mensual Aprox'],
+      ['¿Algo más que quieras comentarnos?']
+    ];
+
+    const steps = stepsDef.map(group => group.map(byLabel).filter(Boolean));
+    if (steps.flat().length === 0) return; // nada que agrupar → salimos
+
+    // Submit / consentimientos al paso final
+    const submitEl = form.querySelector('button[type="submit"], input[type="submit"]');
+    const submitWrap = submitEl ? wrapperFor(submitEl) : null;
+    const consentWraps = Array.from(form.querySelectorAll('input[type="checkbox"], input[type="radio"]'))
+      .map(wrapperFor).filter(Boolean);
+    const finalExtra = [];
+    if (submitWrap) finalExtra.push(submitWrap);
+    consentWraps.forEach(w => { if (!finalExtra.includes(w)) finalExtra.push(w); });
+
+    const total = steps.length + (finalExtra.length ? 1 : 0);
+
+    // === UI mínima (usa tus estilos ya definidos en <style>) =================
+    const host = document.createElement('div');
+    host.className = 'framer-12zesfi';
+
+    const progress = document.createElement('div');
+    progress.className = 'form-stepper-progress';
+    const label = document.createElement('span');
+    label.className = 'form-stepper-progress-label';
+    label.textContent = 'Progreso';
+    const current = document.createElement('span');
+    current.className = 'form-stepper-progress-current';
+    progress.append(label, current);
+
+    const nav = document.createElement('div');
+    nav.className = 'form-stepper-nav';
+    const prev = document.createElement('button');
+    prev.type = 'button';
+    prev.className = 'form-stepper-button form-stepper-button-secondary';
+    prev.textContent = 'Atrás';
+    const next = document.createElement('button');
+    next.type = 'button';
+    next.className = 'form-stepper-button';
+    next.textContent = 'Siguiente';
+    nav.append(prev, next);
+
+    form.insertBefore(host, form.firstChild);
+    host.appendChild(progress);
+
+    // === Estado + render =====================================================
+    let idx = 0;
+    function render(i){
+      // Oculta todo
+      steps.flat().forEach(w => show(w,false));
+      finalExtra.forEach(w => show(w,false));
+
+      if (i < steps.length){
+        steps[i].forEach(w => show(w,true));
+        host.appendChild(nav);
+        nav.style.display = 'flex';
+      } else {
+        finalExtra.forEach(w => show(w,true));
+        nav.style.display = 'none';
+      }
+      prev.style.visibility = (i === 0 ? 'hidden' : 'visible');
+      current.textContent = 'Paso ' + (i+1) + ' de ' + total;
+      idx = i;
+    }
+
+    prev.addEventListener('click', () => { if (idx > 0) render(idx - 1); });
+    next.addEventListener('click', () => { if (idx < steps.length) render(idx + 1); });
+
+    // Inicio
+    render(0);
+  });
+})();
+</script>
+<!-- SOLAI STEPPER v2 -->
 </body>
 
 </html>
