@@ -10219,6 +10219,16 @@
       if (window.__solaiStepperInit) return;
       window.__solaiStepperInit = true;
 
+      if (!document.getElementById("solai-stepper-style")) {
+        const style = document.createElement("style");
+        style.id = "solai-stepper-style";
+        style.textContent = `
+.form-stepper-pending { opacity: 0; pointer-events: none; }
+.form-stepper-ready { opacity: 1; pointer-events: auto; transition: opacity 0.25s ease; }
+        `;
+        document.head.appendChild(style);
+      }
+
       const STEP_BLUEPRINT = [
         ["Nombre", "Apellidos", "Email", "Teléfono"],
         ["Web Empresa"],
@@ -10333,7 +10343,12 @@
       };
 
       const setupStepper = form => {
-        if (form.dataset.stepperReady === "true") return;
+        if (form.dataset.stepperReady === "true") {
+          form.classList.remove("form-stepper-pending");
+          form.classList.add("form-stepper-ready");
+          return;
+        }
+        if (!form.classList.contains("form-stepper-pending")) form.classList.add("form-stepper-pending");
         if (!ensureStructure(form)) return;
 
         const steps = Array.from(form.querySelectorAll("[data-form-step]"));
@@ -10416,6 +10431,8 @@
 
         toggleStep(0);
         form.dataset.stepperReady = "true";
+        form.classList.remove("form-stepper-pending");
+        form.classList.add("form-stepper-ready");
       };
 
       const initialize = () => {
