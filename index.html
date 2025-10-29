@@ -6297,6 +6297,24 @@
     })(window, document, 'script', 'dataLayer', 'GTM-T747VHRK');</script>
   <!-- End Google Tag Manager -->
   <!-- End of headEnd -->
+   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<script>
+// Kill any Service Workers and remove late prefetches/preloads that may cache old content
+(function(){
+  try{
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations()
+        .then(regs => regs.forEach(r => r.unregister().catch(()=>{})))
+        .catch(()=>{});
+    }
+    window.addEventListener('load', () => {
+      document.querySelectorAll('link[rel="prefetch"], link[rel="modulepreload"]').forEach(el => el.remove());
+    });
+  }catch(e){}
+})();
+</script>
 </head>
 
 <body>
@@ -9887,42 +9905,7 @@
     id="__framer__breakpoints">[{"hash":"72rtr7","mediaQuery":"(min-width: 1200px)"},{"hash":"7lwtj4","mediaQuery":"(min-width: 810px) and (max-width: 1199.98px)"},{"hash":"upi8ji","mediaQuery":"(max-width: 809.98px)"},{"hash":"6rg2se","mediaQuery":"(min-width: 1200px)"},{"hash":"148qidq","mediaQuery":"(min-width: 810px) and (max-width: 1199.98px)"},{"hash":"1hbu3yw","mediaQuery":"(max-width: 809.98px)"}]</script>
   <script
     data-framer-appear-animation="no-preference">(() => { function c(i, o, m) { if (window.__framer_disable_appear_effects_optimization__ || typeof animator > "u") return; let e = { detail: { bg: document.hidden } }; requestAnimationFrame(() => { let a = "framer-appear-start"; performance.mark(a, e), animator.animateAppearEffects(JSON.parse(window.__framer__appearAnimationsContent.text), (s, p, d) => { let t = document.querySelector(s); if (t) for (let [r, f] of Object.entries(p)) animator.startOptimizedAppearAnimation(t, r, f, d[r]) }, i, o, m && window.matchMedia("(prefers-reduced-motion:reduce)").matches === !0, animator.getActiveVariantHash(JSON.parse(window.__framer__breakpoints.text))); let n = "framer-appear-end"; performance.mark(n, e), performance.measure("framer-appear", { start: a, end: n, detail: e.detail }) }) } return c })()("data-framer-appear-id", "__Appear_Animation_Transform__", false)</script>
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/react.CKh1tX44.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/rolldown-runtime.C4KuOAJO.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/motion.Csbxpz0i.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/framer.CQYeVb2B.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/nf0yFfa08.B1DLgdZC.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/LC6TE31cM.BVsxVF6Q.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/KuUrcl5x_.C29x_Mx9.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/DddKFlZOpG6r3uSvANXz7co19FOUDVgSPagW8HfbFQc.DwsmOlQm.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/AnimatedLiquidBackground_Prod.B4lpWoT2.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/kDloua7zU.BqYgONF9.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/n7RLEGRKm.ZKa4Oya0.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/rerWrmQ65.f3j63DWm.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/Particles.Jla9FALg.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/augiA20Il.sA0eQ-Kd.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/BlurGradient_Prod.BRSo1Q9T.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/j3hccNIu_.DbNLbWOr.mjs">
-  <link rel="modulepreload" fetchpriority="low"
-    href="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/script_main.CcjTQVAn.mjs">
-  <script type="module" async data-framer-bundle="main" fetchpriority="low"
-    src="https://framerusercontent.com/sites/5wMyqlmF6ul9WbfcA8sMKk/script_main.CcjTQVAn.mjs"></script>
+  
   <div id="svg-templates"
     style="position: absolute; overflow: hidden; bottom: 0; left: 0; width: 0; height: 0; z-index: 0; contain: strict"
     aria-hidden="true">
