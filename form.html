@@ -3368,7 +3368,41 @@ SolAI.">
           'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-T747VHRK');</script>
   <!-- End Google Tag Manager -->
-  <!-- End of headEnd -->
+<style>
+  /* 1) Quita padding/margen en la cadena de padres del form */
+  #main, main { padding-top: 0 !important; }
+  section:has(.framer-12zesfi),
+  div:has(.framer-12zesfi) {
+    padding-top: 8px !important;
+    margin-top: 0 !important;
+  }
+
+  /* 2) El propio bloque del form */
+  .framer-12zesfi { margin-top: 0 !important; }
+  .framer-12zesfi [data-stepper-root]{
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /* 3) Por si el hero anterior fuerza altura con vh */
+  :root *[style*="min-height: 100vh"],
+  :root *[style*="height: 100vh"]{
+    min-height: auto !important;
+    height: auto !important;
+  }
+</style>
+<style id="gap-killer-css">
+  /* GAP KILLER: pega el form al título (CSS correcto) */
+  .framer-12zesfi [data-stepper-root]{
+    margin-top: -120px !important; /* ajusta aquí */
+  }
+  @media (max-width: 1199px){
+    .framer-12zesfi [data-stepper-root]{ margin-top: -80px !important; }
+  }
+  @media (max-width: 809px){
+    .framer-12zesfi [data-stepper-root]{ margin-top: -48px !important; }
+  }
+</style>
 </head>
 
 <body>
@@ -4166,6 +4200,54 @@ window.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.framer-12zesfi form').forEach(f => {
     if (!f.hasAttribute('data-stepper-root')) f.setAttribute('data-stepper-root', '');
   });
+});
+</script>
+<script>
+// Elimina cualquier botón "Siguiente" que NO esté dentro del contenedor del stepper
+document.addEventListener('DOMContentLoaded', function () {
+  try {
+    const isInStepperNav = el => !!el.closest('.form-stepper-nav');
+    const candidates = Array.from(document.querySelectorAll('button, a[role="button"]'));
+    candidates.forEach(el => {
+      const txt = (el.textContent || '').trim().toLowerCase();
+      if (txt === 'siguiente' && !isInStepperNav(el)) {
+        el.remove();
+      }
+    });
+  } catch (e) {}
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const formBlock = document.querySelector('.framer-12zesfi');
+  if (!formBlock) return;
+
+  // 1) Encuentra el hermano anterior visible y con altura grande, y aplástalo
+  let prev = formBlock.previousElementSibling;
+  const isVisible = el => !!(el && (el.offsetWidth || el.offsetHeight || el.getClientRects().length));
+  while (prev && (!isVisible(prev) || prev.getBoundingClientRect().height < 40)) {
+    prev = prev.previousElementSibling;
+  }
+  if (prev) {
+    prev.style.marginBottom = '8px';
+    prev.style.paddingBottom = '0';
+    prev.style.minHeight = 'auto';
+    const h = parseFloat(getComputedStyle(prev).height);
+    if (h > 200) prev.style.height = 'auto';
+  }
+
+  // 2) Sube el form limpiando padding-top en padres cercanos
+  let p = formBlock.parentElement;
+  for (let i = 0; i < 6 && p; i++) {
+    const cs = getComputedStyle(p);
+    if (parseFloat(cs.paddingTop) > 16 || (cs.minHeight && cs.minHeight.includes('vh'))) {
+      p.style.paddingTop = '8px';
+      p.style.minHeight = 'auto';
+      const ph = parseFloat(cs.height);
+      if (ph > 300) p.style.height = 'auto';
+    }
+    p = p.parentElement;
+  }
 });
 </script>
 </body>
