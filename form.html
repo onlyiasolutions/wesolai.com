@@ -3362,7 +3362,7 @@ SolAI.">
           </div>
           <div class="framer-bmvok9" data-framer-name="Hero">
             <div class="framer-7el4zz">
-              <form class="framer-12zesfi" data-framer-appear-id="12zesfi" style="opacity:0.001;transform:none">
+              <form class="framer-12zesfi" data-framer-appear-id="12zesfi" style="opacity:1;transform:none">
                 <div class="form-stepper-progress" aria-live="polite">
                   <span class="form-stepper-progress-label">PROGRESO</span>
                   <span data-step-indicator>PASO 1 DE 6</span>
@@ -3856,6 +3856,9 @@ SolAI.">
           if (indicator) indicator.textContent = `PASO ${current + 1} DE ${steps.length}`;
           form.setAttribute("data-stepper-current", String(current));
           if (document.body) document.body.setAttribute("data-stepper-ready", "true");
+          form.style.opacity = "1";
+          form.style.transform = "none";
+          form.style.pointerEvents = "auto";
         };
 
         const validate = () => {
@@ -3902,6 +3905,8 @@ SolAI.">
         });
 
         setActive();
+        window.addEventListener("load", setActive);
+        requestAnimationFrame(setActive);
       });
     })();
   </script>
