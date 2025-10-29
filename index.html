@@ -10262,7 +10262,11 @@
       const normalize = value => value.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
       const ensureStructure = form => {
-        if (form.dataset.stepperStructure === "true") return true;
+        if (form.dataset.stepperStructure === "true") {
+          if (form.querySelector("[data-form-step]")) return true;
+          form.removeAttribute("data-stepper-structure");
+          form.removeAttribute("data-stepper-ready");
+        }
         if (form.querySelector("[data-form-step]")) {
           form.dataset.stepperStructure = "true";
           return true;
