@@ -2066,6 +2066,37 @@ SolAI.">
       overflow: hidden
     }
 
+    .framer-EWKkU .framer-ivc27i::before {
+      content: "";
+      position: absolute;
+      inset: -45% -25%;
+      background-image:
+        radial-gradient(ellipse at 18% 28%, rgba(78, 143, 255, 0.32) 0%, transparent 55%),
+        radial-gradient(ellipse at 82% 30%, rgba(146, 102, 255, 0.28) 0%, transparent 60%),
+        radial-gradient(ellipse at 48% 78%, rgba(42, 200, 255, 0.26) 0%, transparent 55%);
+      animation: hero-liquid-shift 22s ease-in-out infinite alternate;
+      opacity: 0.85;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      transform: translate3d(0, 0, 0);
+      z-index: 0
+    }
+
+    .framer-EWKkU .framer-ivc27i::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 55%);
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0
+    }
+
+    .framer-EWKkU .framer-ivc27i > * {
+      position: relative;
+      z-index: 1
+    }
+
     .framer-EWKkU .framer-18cv88e {
       z-index: 1;
       background-color: #0000;
@@ -2259,6 +2290,20 @@ SolAI.">
       opacity: 0.6;
       cursor: not-allowed;
       transform: none
+    }
+
+    @keyframes hero-liquid-shift {
+      0% {
+        transform: translate3d(-6%, -4%, 0) scale(1.05) rotate(0deg)
+      }
+
+      50% {
+        transform: translate3d(4%, 7%, 0) scale(1.12) rotate(5deg)
+      }
+
+      100% {
+        transform: translate3d(-4%, 3%, 0) scale(1.07) rotate(-4deg)
+      }
     }
 
     .framer-EWKkU .framer-uh6uw2 {
@@ -3623,7 +3668,7 @@ SolAI.">
                     const style = document.createElement("style");
                     style.id = STYLE_ID;
                     style.textContent = `
-body:not([data-stepper-ready]) .framer-12zesfi { opacity: 0; pointer-events: none; }
+body:not([data-stepper-ready]) .framer-12zesfi { opacity: 0; }
 body[data-stepper-ready] .framer-12zesfi { opacity: 1; pointer-events: auto; transition: opacity 0.25s ease; }
 .framer-12zesfi .form-step { display: none !important; flex-direction: column; gap: 18px; width: 100%; }
 .framer-12zesfi .form-step.form-step-active { display: flex !important; }
