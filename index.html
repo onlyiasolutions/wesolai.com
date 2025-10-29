@@ -10284,6 +10284,138 @@ document.addEventListener('click', function (e) {
   }).observe(document.documentElement, { childList: true, subtree: true });
 })();
 </script>
+<script>
+  (function () {
+    // Valores correctos
+    const EMAIL = "hola@wesolai.com";
+    const IG_URL = "https://instagram.com/wesolailabs";
+
+    // Patrones a limpiar que puede inyectar el bundle de Framer en móviles/tablet
+    const BAD_EMAILS = [/hola@onlyiasolutions\.com/i, /landio@support\.com/i];
+    const BAD_HOSTS  = [/instagram\.com\/onlyiasolutions/i, /onlyiasolutions\.com/i];
+
+    // Reemplaza en atributos string (href, data-*, title, aria-*)
+    function replaceInAttributes(el) {
+      for (const attr of el.getAttributeNames()) {
+        const val = el.getAttribute(attr);
+        if (typeof val !== "string") continue;
+
+        let newVal = val
+          .replace(/mailto:\s*hola@onlyiasolutions\.com/gi, "mailto:" + EMAIL)
+          .replace(/mailto:\s*landio@support\.com/gi, "mailto:" + EMAIL)
+          .replace(/instagram\.com\/onlyiasolutions/gi, "instagram.com/wesolailabs")
+          .replace(/onlyiasolutions\.com/gi, "wesolai.com");
+
+        // Forzar destinos correctos en href
+        if (attr === "href") {
+          if (/^mailto:/i.test(newVal)) {
+            newVal = "mailto:" + EMAIL;
+          } else if (/instagram\.com/i.test(newVal)) {
+            newVal = IG_URL;
+          }
+        }
+
+        if (newVal !== val) el.setAttribute(attr, newVal);
+      }
+    }
+
+    // Arregla un <a>
+    function fixAnchor(a) {
+      if (!(a instanceof HTMLAnchorElement)) return;
+
+      const href = a.getAttribute("href") || "";
+      if (href.startsWith("mailto:")) {
+        a.setAttribute("href", "mailto:" + EMAIL);
+        a.removeAttribute("target");
+        a.removeAttribute("rel");
+      } else if (/instagram\.com/i.test(href)) {
+        a.setAttribute("href", IG_URL);
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener");
+      }
+
+      // Si el texto parece email, normalízalo
+      const txt = (a.textContent || "").trim();
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(txt) && txt.toLowerCase() !== EMAIL.toLowerCase()) {
+        a.textContent = EMAIL;
+      }
+
+      // Limpia atributos residuales
+      replaceInAttributes(a);
+    }
+
+    // Pasa por todo el DOM: anchors + elementos con atributos string
+    function patchOnce(root = document) {
+      root.querySelectorAll("a").forEach(fixAnchor);
+
+      root.querySelectorAll("*").forEach(replaceInAttributes);
+
+      // Text nodes sueltos (emails sin <a>)
+      const walker = document.createTreeWalker(root.body || root, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {
+        let t = node.nodeValue;
+        if (!t) continue;
+        BAD_EMAILS.forEach(re => (t = t.replace(re, EMAIL)));
+        BAD_HOSTS.forEach(re => (t = t.replace(re, m => m.replace(/onlyiasolutions\.com/i, "wesolai.com"))));
+        node.nodeValue = t;
+      }
+    }
+
+    // Intercepta interacción y corrige ANTES de navegar
+    function getAnchorFromEvent(e) {
+      let el = e.target;
+      while (el && el !== document && !(el instanceof HTMLAnchorElement)) el = el.parentNode;
+      return el instanceof HTMLAnchorElement ? el : null;
+    }
+
+    function intercept(e) {
+      const a = getAnchorFromEvent(e);
+      if (!a) return;
+      const href = (a.getAttribute("href") || "").trim();
+
+      if (href.startsWith("mailto:")) {
+        e.preventDefault();
+        a.setAttribute("href", "mailto:" + EMAIL);
+        a.textContent = EMAIL;
+        window.location.href = "mailto:" + EMAIL;
+      } else if (/instagram\.com/i.test(href)) {
+        e.preventDefault();
+        a.setAttribute("href", IG_URL);
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener");
+        window.open(IG_URL, "_blank", "noopener");
+      }
+    }
+
+    // Ejecutar pronto
+    document.addEventListener("DOMContentLoaded", patchOnce);
+
+    // Repetir unos segundos para ganar a la rehidratación
+    window.addEventListener("load", function () {
+      let i = 0;
+      const iv = setInterval(function () {
+        patchOnce();
+        if (++i > 40) clearInterval(iv); // ~20s
+      }, 500);
+    });
+
+    // Observar mutaciones (cuando Framer reinyecta nodos por breakpoints)
+    new MutationObserver(function (mutations) {
+      for (const m of mutations) {
+        if (m.addedNodes && m.addedNodes.length) {
+          patchOnce();
+          break;
+        }
+      }
+    }).observe(document.documentElement, { childList: true, subtree: true });
+
+    // Interceptores en captura para click/toque
+    document.addEventListener("click", intercept, true);
+    document.addEventListener("pointerdown", intercept, true);
+    document.addEventListener("touchstart", intercept, true);
+  })();
+</script>
 </body>
 
 </html>
